@@ -52,7 +52,7 @@ function CartView(props) {
         <h3>Tổng tiền: {helpers.formatProductPrice(totalPrice(list))}</h3>
         <Link to={length > 0 ? constants.ROUTES.CART : '/'}>
           <Button
-            className="m-tb-8 d-block m-lr-auto w-100"
+            className="m-tb-8 d-block m-lr-auto w-100 btn-back-view"
             type="primary"
             size="large">
             {length > 0 ? 'Đến giỏ hàng' : 'Mua sắm ngay'}

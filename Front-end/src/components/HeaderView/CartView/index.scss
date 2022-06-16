@@ -23,6 +23,26 @@
   }
 }
 
+.btn-back-view {
+  background:brown !important;
+}
+
+.btn-back-view:hover{
+  background-color: #ab4141 !important;
+}
+
+.btn-back-view-dn{
+  background:brown !important;
+}
+
+.btn-back-view-dn:hover{
+  background:#ab4141 !important;
+}
+
+.btn-back-view-dk{
+  background: #ab4c40 !important;
+}
+
 @media only screen and (max-width: 768px) {
   .cart-view {
     display: none;

@@ -3,7 +3,7 @@ import {
   ReconciliationOutlined,
   SearchOutlined,
   ShoppingCartOutlined,
-  UserOutlined,
+  UserDeleteOutlined,
 } from '@ant-design/icons';
 import {
   AutoComplete,
@@ -102,21 +102,21 @@ function HeaderView() {
             Đăng xuất
           </Button>
         ) : (
-          <Button size="large" className="w-100" type="primary">
+          <Button size="large" className="w-100 btn-back-view-dn" type="primary">
             <Link to={constants.ROUTES.LOGIN}>Đăng nhập</Link>
           </Button>
         )}
       </Menu.Item>
       <Menu.Item>
         <Link to={constants.ROUTES.SIGNUP}>
-          <Button size="large" className="w-100 btn-secondary" type="default">
+          <Button size="large" className="w-100 btn-secondary btn-back-view-dk" type="default">
             Đăng ký
           </Button>
         </Link>
       </Menu.Item>
       {isAuth && (
         <Menu.Item>
-          <Button size="large" className="w-100 btn-secondary" type="default">
+          <Button size="large" className="w-100 btn-secondary btn-back-view-dk" type="default">
             <Link to={constants.ROUTES.ACCOUNT + '/'}>Quản lý Tài khoản</Link>
           </Button>
         </Menu.Item>
@@ -134,8 +134,8 @@ function HeaderView() {
         <Link to="/">
           <img
             src={logoUrl}
-            width={isSmDevice ? 78 : 112}
-            height={isSmDevice ? 36 : 48}
+            width={isSmDevice ? 78 : 100}
+            height={isSmDevice ? 36 : 98}
           />
         </Link>
 
@@ -158,7 +158,7 @@ function HeaderView() {
                 placeholder={!isSmDevice ? 'Nhập từ khoá cần tìm' : 'Tìm kiếm'}
               />
             </AutoComplete>
-            <Button type="primary" size={isSmDevice ? 'middle' : 'large'}>
+            <Button type="primary" size={isSmDevice ? 'middle' : 'large'} style={{backgroundColor:"brown"}}>
               <Link to={linkSearch === '' ? locations : initLink + linkSearch}>
                 <SearchOutlined /> {!isSmDevice ? 'Tìm kiếm' : ''}
               </Link>
@@ -187,7 +187,7 @@ function HeaderView() {
                       }>
                       {!isAuth ? (
                         <div className="d-flex navbar-tool-item p-l-0">
-                          <UserOutlined className="icon m-r-12" />
+                          <UserDeleteOutlined className="icon m-r-12" />
                           <span className="title">Đăng nhập</span>
                         </div>
                       ) : (
@@ -259,7 +259,7 @@ function HeaderView() {
                   }>
                   {!isAuth ? (
                     <div className="d-flex flex-direction-column navbar-tool-item">
-                      <UserOutlined className="icon" />
+                      <UserDeleteOutlined  className="icon" />
                       <span className="title">Đăng nhập</span>
                     </div>
                   ) : (
