@@ -20,32 +20,32 @@ function showBrandList(list) {
 // danh sách thương hiệu
 const list = [
   {
-    link: 'https://vn.msi.com/',
+    link: 'https://www.dahuasecurity.com/',
     src:
-      'https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268385/famous-brands/msi_zjnihe.webp',
-    title: 'MSI',
-    desc: 'Bé rồng đỏ siêu cute, gaming',
+      'https://digione.vn/upload/source/camera-wifi-khong-day-yoosee-3-rau-hd1080-20m-xoay-36o-digione/camera-wifi-yoosee-3-rau-1080p-digione-22.jpg',
+    title: 'Dahuase',
+    desc: 'Nhãn hiệu camera lớn'
   },
   {
-    link: 'https://www8.hp.com/us/en/home.html',
+    link: 'https://camerayoosee.com/',
     src:
-      'https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268384/famous-brands/hp_cdxdv8.webp',
-    title: 'HP',
-    desc: 'Laptop siêu cấp vip pro',
+      'https://camerayoosee.vn/wp-content/uploads/2020/12/yosee-999-rw-720p.jpg',
+    title: 'Yoosee',
+    desc: 'Nhãn hiệu camera lớn'
   },
   {
-    link: 'https://www.lenovo.com/vn/vn/',
+    link: 'https://miviet.com/camera-xiaomi-chinh-hang/',
     src:
-      'https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268384/famous-brands/lenovo_trmmkt.webp',
-    title: 'LENOVO',
-    desc: 'Siêu ưu đãi cùng với LENOVO',
+      'https://miviet.com/wp-content/uploads/2022/03/miviet.com-camera-ip-giam-sat-imilab-c20-hd-1080p-imilab-c20.webp',
+    title: 'Xiaomi',
+    desc: 'Nhãn hiệu camera lớn'
   },
   {
-    link: 'https://www.lg.com/vn',
+    link: 'https://ezviz.vn/danh-muc-san-pham/camera-an-ninh/camera-wifi-trong-nha',
     src:
-      'https://res.cloudinary.com/tuan-cloudinary/image/upload/v1608268384/famous-brands/lg_yijaob.webp',
-    title: 'LG',
-    desc: 'Sản phẩm siêu chất lượng',
+      'https://digione.vn/upload/source/camera-ip-wifi-ezviz-cs-c1c-b-1080p-h265-digione/camera-ip-wifi-ezviz-cs-c1c1-b-1080p-digione-27.jpg',
+    title: 'Ezviz',
+    desc: 'Nhãn hiệu camera lớn'
   },
 ];
 

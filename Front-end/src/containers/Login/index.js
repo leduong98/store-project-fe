@@ -6,9 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Col, message, Row, Tooltip } from 'antd';
 import loginApi from 'apis/loginApi';
-import CheckboxField from 'components/Custom/Field/CheckboxField';
 import InputField from 'components/Custom/Field/InputField';
-import LoginGoogle from 'components/LoginGoogle';
 import constants from 'constants/index';
 import { FastField, Form, Formik } from 'formik';
 import React, { useState } from 'react';
@@ -144,9 +142,6 @@ function Login() {
                 </Col>
                 <Col span={24}>
                   <div className="d-flex justify-content-between">
-                    <FastField name="keepLogin" component={CheckboxField}>
-                      <b>Duy trì đăng nhập</b>
-                    </FastField>
                     <Link
                       to={constants.ROUTES.FORGOT_PASSWORD}
                       style={{ color: '#50aaff' }}>
@@ -168,12 +163,6 @@ function Login() {
                   </Button>
                 </Col>
                 <Col span={24} className="p-t-0 t-center">
-                  <div className="or-option" style={{ color: '#acacac' }}>
-                    HOẶC
-                  </div>
-                  <LoginGoogle
-                    title={windowWidth > 375 ? 'Đăng nhập với Gmail' : 'Gmail'}
-                  />
                   <div className="m-t-20 m-b-20 font-weight-500">
                     Bạn chưa đã có tài khoản ?
                     <Link to={constants.ROUTES.SIGNUP}>&nbsp;Đăng ký</Link>

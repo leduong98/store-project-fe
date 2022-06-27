@@ -10,7 +10,6 @@ import DatePickerField from 'components/Custom/Field/DatePickerField';
 import InputField from 'components/Custom/Field/InputField';
 import SelectField from 'components/Custom/Field/SelectField';
 import Delay from 'components/Delay';
-import LoginGoogle from 'components/LoginGoogle';
 import constants from 'constants/index';
 import { FastField, Form, Formik } from 'formik';
 import React, { useRef, useState } from 'react';
@@ -82,12 +81,10 @@ function SignUp() {
   // giá trọ khởi tạo cho formik
   const initialValue = {
     email: '',
-    verifyCode: '',
     password: '',
     confirmPassword: '',
     fullName: '',
     address: '',
-    gender: null,
   };
 
   // validate form trước submit với yup
@@ -104,13 +101,6 @@ function SignUp() {
         '* Không được chứa ký tự đặc biệt',
       )
       .max(70, '* Tối đa 70 ký tự'),
-    verifyCode: Yup.string()
-      .trim()
-      .required('* Nhập mã xác nhận')
-      .length(
-        constants.MAX_VERIFY_CODE,
-        `* Mã xác nhận có ${constants.MAX_VERIFY_CODE} ký tự`,
-      ),
     password: Yup.string()
       .trim()
       .required('* Mật khẩu của bạn là gì ?')
@@ -131,7 +121,6 @@ function SignUp() {
         new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
         `* Tuổi tối thiểu là ${constants.MIN_AGE}`,
       ),
-    gender: Yup.boolean().required('* Giới tính của bạn'),
     address: Yup.string()
       .trim()
       .max(100, '* Tối đa 100 ký tự'),
@@ -185,33 +174,6 @@ function SignUp() {
                           </Tooltip>
                         }
                       />
-                    </Col>
-                    <Col span={12}>
-                      {/* user name field */}
-                      <FastField
-                        name="verifyCode"
-                        component={InputField}
-                        className="input-form-common"
-                        placeholder="Mã xác nhận *"
-                        size="large"
-                        suffix={
-                          <Tooltip title="Click gửi mã để nhận mã qua email">
-                            <InfoCircleOutlined
-                              style={{ color: suffixColor }}
-                            />
-                          </Tooltip>
-                        }
-                      />
-                    </Col>
-                    <Col span={12}>
-                      <Button
-                        className="w-100 verify-btn"
-                        type="primary"
-                        size="large"
-                        onClick={onSendCode}
-                        loading={isSending}>
-                        Gửi mã
-                      </Button>
                     </Col>
                     <Col span={24}>
                       {/* password field */}
@@ -277,17 +239,6 @@ function SignUp() {
                       />
                     </Col>
                     <Col span={24}>
-                      {/* gender field */}
-                      <FastField
-                        className="input-form-common gender-field"
-                        size="large"
-                        name="gender"
-                        component={SelectField}
-                        placeholder="Giới tính *"
-                        options={constants.GENDER_OPTIONS}
-                      />
-                    </Col>
-                    <Col span={24}>
                       {/* address filed */}
                       <FastField
                         name="address"
@@ -320,13 +271,6 @@ function SignUp() {
                 </Col>
 
                 <Col span={24} className="p-t-0 t-center">
-                  <div className="or-option" style={{ color: '#acacac' }}>
-                    HOẶC
-                  </div>
-                  <LoginGoogle
-                    className="login-gg m-0-auto"
-                    title={windowWidth > 375 ? 'Đăng nhập với Gmail' : 'Gmail'}
-                  />
                   <div className="m-t-10 font-weight-500">
                     Bạn đã có tài khoản ?
                     <Link to={constants.ROUTES.LOGIN}>&nbsp;Đăng nhập</Link>
