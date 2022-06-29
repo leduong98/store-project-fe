@@ -1,18 +1,13 @@
 import axiosClient from './axiosClient';
 
-const ACCOUNT_API_ENDPOINT = '/accounts';
+const ACCOUNT_API_ENDPOINT = '/user';
 
 const accountApi = {
-  // fn: gửi mã xác nhận
-  postSendVerifyCode: (email) => {
-    const url = ACCOUNT_API_ENDPOINT + '/verify';
-    return axiosClient.post(url, email);
-  },
 
   // fn: đăng ký
-  postSignUp: (account) => {
-    const url = ACCOUNT_API_ENDPOINT + '/signup';
-    return axiosClient.post(url, account);
+  postSignUp: (registerRequest) => {
+    const url = ACCOUNT_API_ENDPOINT + '/register';
+    return axiosClient.post(url, Object.values(registerRequest)[0]);
   },
 
   // fn: gửi mã xác nhận lấy lại mật khẩu

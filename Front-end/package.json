@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open --port 8080",
-    "watch": "webpack --config webpack.config.js --env.mode=development --port 8080 --watch",
+    "start": "webpack-dev-server --open --port 3000",
+    "watch": "webpack --config webpack.config.js --env.mode=development --port 3000 --watch",
     "build": "webpack --config webpack.config.js --env.mode=production",
     "dev": "webpack --config webpack.config.js --env.mode=development"
   },

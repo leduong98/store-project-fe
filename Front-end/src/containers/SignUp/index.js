@@ -8,7 +8,6 @@ import { Button, Col, message, Row, Tooltip } from 'antd';
 import accountApi from 'apis/accountApi';
 import DatePickerField from 'components/Custom/Field/DatePickerField';
 import InputField from 'components/Custom/Field/InputField';
-import SelectField from 'components/Custom/Field/SelectField';
 import Delay from 'components/Delay';
 import constants from 'constants/index';
 import { FastField, Form, Formik } from 'formik';
@@ -28,41 +27,11 @@ function SignUp() {
   // ref kiểm tra đã nhập email hay chưa, hỗ trợ việc gửi mã xác nhận
   const emailRef = useRef('');
 
-  // fn: gửi mã xác nhận
-  const onSendCode = async () => {
-    try {
-      // kiểm tra email
-      const email = emailRef.current;
-      const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-      if (!regex.test(email)) {
-        message.error('Email không hợp lệ !');
-        return;
-      }
-      // set loading, tránh việc gửi liên tục
-      setIsSending(true);
-
-      // tiến hành gửi mã
-      const result = await accountApi.postSendVerifyCode({ email });
-      if (result.status === 200) {
-        message.success('Gửi thành công, kiểm tra email');
-        setIsSending(false);
-      }
-    } catch (error) {
-      setIsSending(false);
-      if (error.response) {
-        message.error(error.response.data.message);
-      } else {
-        message.error('Gửi thất bại, thử lại');
-      }
-    }
-  };
-
   // fn: xứ lý đăng ký
-  const onSignUp = async (account) => {
+  const onSignUp = async (registerRequest) => {
     try {
       setIsSubmitting(true);
-      const result = await accountApi.postSignUp({ account });
+      const result = await accountApi.postSignUp({ registerRequest });
       if (result.status === 200) {
         message.success('Đăng ký thành công.', 1);
         setIsSubmitting(false);
@@ -83,9 +52,12 @@ function SignUp() {
     email: '',
     password: '',
     confirmPassword: '',
-    fullName: '',
+    fullname: '',
     address: '',
+    phone:''
   };
+
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
   // validate form trước submit với yup
   const validationSchema = Yup.object().shape({
@@ -93,7 +65,7 @@ function SignUp() {
       .trim()
       .required('* Email bạn là gì ?')
       .email('* Email không hợp lệ !'),
-    fullName: Yup.string()
+    fullname: Yup.string()
       .trim()
       .required('* Tên bạn là gì ?')
       .matches(
@@ -115,7 +87,7 @@ function SignUp() {
       '* Mật khẩu chưa trùng khớp',
     ),
     birthday: Yup.date()
-      .notRequired()
+      .required()
       .min(new Date(1900, 1, 1), '* Năm sinh từ 1900')
       .max(
         new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
@@ -124,6 +96,11 @@ function SignUp() {
     address: Yup.string()
       .trim()
       .max(100, '* Tối đa 100 ký tự'),
+    phone: Yup.string()
+      .required("Số điện thoại là gì?")
+      .matches(phoneRegExp, 'Số điện thoại không đúng định dạng!')
+      .min(10, "Quá ngắn")
+      .max(12, "Quá dài"),
   });
 
   // return...
@@ -214,13 +191,30 @@ function SignUp() {
                     <Col span={24}>
                       {/* full name filed */}
                       <FastField
-                        name="fullName"
+                        name="fullname"
                         component={InputField}
                         className="input-form-common"
                         placeholder="Họ và tên *"
                         size="large"
                         suffix={
                           <Tooltip title="Họ và tên của bạn">
+                            <InfoCircleOutlined
+                              style={{ color: suffixColor }}
+                            />
+                          </Tooltip>
+                        }
+                      />
+                    </Col>
+                    <Col span={24}>
+                      {/* full name filed */}
+                      <FastField
+                        name="phone"
+                        component={InputField}
+                        className="input-form-common"
+                        placeholder="Số Điện Thoại *"
+                        size="large"
+                        suffix={
+                          <Tooltip title="Số điện thoại của bạn">
                             <InfoCircleOutlined
                               style={{ color: suffixColor }}
                             />
