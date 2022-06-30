@@ -1,4 +1,4 @@
-//=== Sign Up Page
+//=== Sign in Page
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
@@ -18,7 +18,6 @@ import './index.scss';
 
 function Login() {
   const history = useHistory();
-  const windowWidth = window.screen.width;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDisableLogin, setIsDisableLogin] = useState(false);
   const dispatch = useDispatch();
@@ -28,11 +27,9 @@ function Login() {
     try {
       setIsSubmitting(false);
       message.success('Đăng nhập thành công');
-      // lưu refresh token vào local storage
-      // localStorage.setItem(constants.REFRESH_TOKEN, data.refreshToken);
-      // Note: Lưu jwt vào localStorage nếu deploy heroku
-      if (process.env.NODE_ENV === 'production')
-        localStorage.setItem(constants.ACCESS_TOKEN_KEY, data.token);
+      localStorage.setItem(constants.ACCESS_TOKEN_KEY, data.access_token);
+
+      localStorage.setItem("user_info", )
       dispatch(authReducers.setIsAuth(true));
       setTimeout(() => {
         history.goBack();
@@ -46,7 +43,7 @@ function Login() {
   const onLogin = async (account) => {
     try {
       setIsSubmitting(true);
-      const result = await loginApi.postLogin({ account });
+      const result = await loginApi.postLogin(account);
       if (result.status === 200) {
         onLoginSuccess(result.data);
       }
@@ -70,11 +67,10 @@ function Login() {
     }
   };
 
-  // giá trọ khởi tạo cho formik
+  // giá trị khởi tạo cho formik
   const initialValue = {
     email: '',
     password: '',
-    keepLogin: false,
   };
 
   // validate form trước submit với yup

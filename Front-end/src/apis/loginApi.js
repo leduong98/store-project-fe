@@ -1,12 +1,12 @@
 import constants from 'constants/index';
 import axiosClient from './axiosClient';
 
-const LOGIN_API_ENDPOINT = '/login';
+const LOGIN_API_ENDPOINT = '/user';
 
 const loginApi = {
   // api: đăng nhập
   postLogin: (account) => {
-    const url = LOGIN_API_ENDPOINT;
+    const url = LOGIN_API_ENDPOINT + '/login';
     return axiosClient.post(url, account);
   },
 

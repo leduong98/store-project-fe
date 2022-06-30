@@ -48,15 +48,9 @@ function HeaderView() {
   // event: log out
   const onLogout = async () => {
     try {
-      const response = await loginApi.postLogout();
-      if (response) {
         message.success('Đăng xuất thành công', 2);
-        localStorage.removeItem(constants.REFRESH_TOKEN_KEY);
-        if (process.env.NODE_ENV === 'production')
-          localStorage.removeItem(constants.ACCESS_TOKEN_KEY);
-
+        localStorage.removeItem(constants.ACCESS_TOKEN_KEY);
         location.reload();
-      }
     } catch (error) {
       message.error('Đăng xuất thất bại', 2);
     }

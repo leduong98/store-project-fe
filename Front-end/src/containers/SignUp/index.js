@@ -17,10 +17,6 @@ import * as Yup from 'yup';
 import './index.scss';
 
 function SignUp() {
-  const windowWidth = window.screen.width;
-
-  // fn: trạng thái gửi mã xác thực
-  const [isSending, setIsSending] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRedirectLogin, setIsRedirectLogin] = useState(false);
 
@@ -31,7 +27,7 @@ function SignUp() {
   const onSignUp = async (registerRequest) => {
     try {
       setIsSubmitting(true);
-      const result = await accountApi.postSignUp({ registerRequest });
+      const result = await accountApi.postSignUp(registerRequest );
       if (result.status === 200) {
         message.success('Đăng ký thành công.', 1);
         setIsSubmitting(false);
@@ -88,12 +84,9 @@ function SignUp() {
     ),
     birthday: Yup.date()
       .required()
-      .min(new Date(1900, 1, 1), '* Năm sinh từ 1900')
-      .max(
-        new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
-        `* Tuổi tối thiểu là ${constants.MIN_AGE}`,
-      ),
+      .min(new Date(1900, 1, 1), '* Năm sinh từ 1900'),
     address: Yup.string()
+      .required()
       .trim()
       .max(100, '* Tối đa 100 ký tự'),
     phone: Yup.string()
