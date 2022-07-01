@@ -1,5 +1,6 @@
 //======= imports =======//
-import userApi from 'apis/userApi';
+import loginApi
+  from "../apis/loginApi";
 //======= constant action type =======//
 const GET_USER = 'GET_USER';
 
@@ -7,8 +8,11 @@ const GET_USER = 'GET_USER';
 const getUserRequest = () => {
   return async (dispatch) => {
     try {
-      const response = await userApi.getUser();
-      const { user } = response.data;
+      const response = await loginApi.getAuth();
+      if (response.status == 200){
+        console.log("Lấy data thành công!")
+      }
+      const user  = response.data;
       dispatch(getUser(user));
     } catch (error) {
       throw error;

@@ -15,6 +15,8 @@ import { Link, useHistory } from 'react-router-dom';
 import authReducers from 'reducers/auth';
 import * as Yup from 'yup';
 import './index.scss';
+import userReducers
+  from "../../reducers/user";
 
 function Login() {
   const history = useHistory();
@@ -28,8 +30,7 @@ function Login() {
       setIsSubmitting(false);
       message.success('Đăng nhập thành công');
       localStorage.setItem(constants.ACCESS_TOKEN_KEY, data.access_token);
-
-      localStorage.setItem("user_info", )
+      dispatch(userReducers.getUserRequest());
       dispatch(authReducers.setIsAuth(true));
       setTimeout(() => {
         history.goBack();

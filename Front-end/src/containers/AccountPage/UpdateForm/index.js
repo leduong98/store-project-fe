@@ -13,18 +13,20 @@ import userReducers from 'reducers/user';
 import * as Yup from 'yup';
 function UpdateAccountForm() {
   const user = useSelector((state) => state.user);
-  const { _id, fullName, email, address, birthday, gender } = user;
+  const { full_name, email, address, birthday, phone } = user;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
 
-  // giá trọ khởi tạo cho formik
+  // giá trị khởi tạo cho formik
   const initialValue = {
     email,
-    fullName,
+    full_name,
     address,
-    gender,
-    birthday,
+    phone,
+    birthday
   };
+
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
   // validate form trước submit với yup
   const validationSchema = Yup.object().shape({
@@ -32,7 +34,7 @@ function UpdateAccountForm() {
       .trim()
       .required('* Email bạn là gì ?')
       .email('* Email không hợp lệ !'),
-    fullName: Yup.string()
+    full_name: Yup.string()
       .trim()
       .required('* Tên bạn là gì ?')
       .matches(
@@ -47,7 +49,11 @@ function UpdateAccountForm() {
         new Date(new Date().getFullYear() - parseInt(constants.MIN_AGE), 1, 1),
         `* Tuổi tối thiểu là ${constants.MIN_AGE}`,
       ),
-    gender: Yup.boolean().required('* Giới tính của bạn'),
+    phone: Yup.string()
+      .required("Số điện thoại là gì?")
+      .matches(phoneRegExp,   'Số điện thoại không đúng định dạng!')
+      .min(10, "Quá ngắn")
+      .max(12, "Quá dài"),
     address: Yup.string()
       .trim()
       .max(100, '* Tối đa 100 ký tự'),
@@ -61,7 +67,8 @@ function UpdateAccountForm() {
         setIsSubmitting(false);
         return;
       }
-      const response = await userApi.putUpdateUser(_id, value);
+      value["json_type"] ="user_update"
+      const response = await userApi.putUpdateUser(value);
       if (response) {
         message.success('Cập nhật thành công.');
         setIsSubmitting(false);
@@ -111,7 +118,7 @@ function UpdateAccountForm() {
                   <Col className="p-b-0" span={24} md={12}>
                     {/* full name filed */}
                     <FastField
-                      name="fullName"
+                      name="full_name"
                       component={InputField}
                       className="input-form-common"
                       placeholder="Họ và tên *"
@@ -136,12 +143,18 @@ function UpdateAccountForm() {
                   <Col className="p-b-0" span={24} md={12}>
                     {/* gender field */}
                     <FastField
-                      className="input-form-common gender-field"
+                      name="phone"
+                      component={InputField}
+                      className="input-form-common"
+                      placeholder="Số Điện Thoại *"
                       size="large"
-                      name="gender"
-                      component={SelectField}
-                      placeholder="Giới tính *"
-                      options={constants.GENDER_OPTIONS}
+                      suffix={
+                        <Tooltip title="Số điện thoại của bạn">
+                          <InfoCircleOutlined
+                            style={{ color: suffixColor }}
+                          />
+                        </Tooltip>
+                      }
                     />
                   </Col>
                   <Col className="p-b-0" span={24} md={12}>

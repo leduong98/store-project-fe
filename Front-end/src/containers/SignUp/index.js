@@ -27,6 +27,7 @@ function SignUp() {
   const onSignUp = async (registerRequest) => {
     try {
       setIsSubmitting(true);
+      registerRequest["json_type"] ="user"
       const result = await accountApi.postSignUp(registerRequest );
       if (result.status === 200) {
         message.success('Đăng ký thành công.', 1);

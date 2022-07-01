@@ -121,7 +121,7 @@ function AccountPage() {
               <div>
                 <span className="m-b-0 font-size-16px">Tài khoản của</span>
                 <h3>
-                  <b className="name">{user.fullName}</b>
+                  <b className="name">{user.full_name}</b>
                 </h3>
               </div>
             </div>
