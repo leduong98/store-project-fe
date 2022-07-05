@@ -1,37 +1,40 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import { Link } from 'react-router-dom';
 import './index.scss'
-
-const menu = [
-  {
-    key: 0,
-    to: '/filter?t=0',
-    title: 'Camera Trong Nhà',
-  },
-  {
-    key: 1,
-    to: '/filter?t=1',
-    title: 'Camera Mini',
-  },
-  {
-    key: 4,
-    to: '/filter?t=4',
-    title: 'Camera Ngoài Trời',
-  },
-  {
-    key: 9,
-    to: '/filter?t=9',
-    title: 'Camera 360',
-  },
-  {
-    key: 2,
-    to: '/filter?t=2',
-    title: 'Camera Dùng Pin',
-  },
-];
+import productApi
+  from "../../../apis/productApi";
 
 function MenuFilter() {
+
+  const [menu, setMenu] = useState();
+
+  // lấy category
+  useEffect(() => {
+    let isSubscribe = true;
+    async function getAllCategory() {
+      try {
+        const response = await productApi.getCategory();
+        if (response && isSubscribe) {
+          const res  = response.data;
+          const menuList = []
+          for (const d of res.data) {
+            const a = {to: "/filter?catId="+d.id,
+              title: d.name}
+            menuList.push(a)
+          }
+          setMenu(menuList);
+        }
+      } catch (error) {
+        console.log(false);
+      }
+    }
+    getAllCategory().then(r => console.log(true));
+    return () => (isSubscribe = false);
+  },[]);
 
   function renderFilterMenu(list) {
     return (
