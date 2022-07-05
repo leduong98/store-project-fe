@@ -1,8 +1,25 @@
 import axiosClient from './axiosClient';
 
-const PRODUCT_API_URL = '/products';
+const PRODUCT_API_URL = '/product';
+const CATEGORY_API_URL = '/category';
 
 const productApi = {
+
+  // api: lấy all category
+  getCategory: () => {
+    const url = CATEGORY_API_URL + '/all'
+    return axiosClient.get(url);
+  },
+
+  // api: lấy product list theo category
+  getProductByCat: (catId) => {
+    const param = {
+      catId: catId
+    }
+    const url= PRODUCT_API_URL + '/all'
+    return axiosClient.get(url, { params: { catId } })
+  },
+
   // api: Lấy 1 sản phẩm
   getProduct: (id) => {
     const url = PRODUCT_API_URL;
@@ -16,9 +33,9 @@ const productApi = {
   },
 
   // api: Lấy danh sách sản phẩm và phân trang
-  getAllProducts: (page = 1, perPage = 8) => {
+  getAllProducts: (page = 0, size = 8) => {
     const url = PRODUCT_API_URL + '/all';
-    return axiosClient.get(url, { params: { page, perPage } });
+    return axiosClient.get(url, { params: { page, size } });
   },
 
   // api: tìm kiếm sản phẩm

@@ -93,18 +93,18 @@ ProductView.defaultProps = {
   className: '',
 };
 
-// check prop type
-ProductView.propTypes = {
-  className: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  avtUrl: PropTypes.string,
-  discount: PropTypes.number,
-  stock: PropTypes.number,
-  action: PropTypes.any,
-  style: PropTypes.object,
-  height: PropTypes.number,
-  maxWidth: PropTypes.number,
-};
+// // check prop type
+// ProductView.propTypes = {
+//   className: PropTypes.string,
+//   name: PropTypes.string,
+//   price: PropTypes.number,
+//   avtUrl: PropTypes.string,
+//   discount: PropTypes.number,
+//   stock: PropTypes.number,
+//   action: PropTypes.any,
+//   style: PropTypes.object,
+//   height: PropTypes.number,
+//   maxWidth: PropTypes.number,
+// };
 
 export default ProductView;

@@ -3,7 +3,6 @@ import { Button, Col, message, Row, Tooltip } from 'antd';
 import userApi from 'apis/userApi';
 import DatePickerField from 'components/Custom/Field/DatePickerField';
 import InputField from 'components/Custom/Field/InputField';
-import SelectField from 'components/Custom/Field/SelectField';
 import constants from 'constants/index';
 import { FastField, Form, Formik } from 'formik';
 import React, { useState } from 'react';

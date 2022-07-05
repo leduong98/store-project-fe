@@ -16,11 +16,11 @@ function AllProduct() {
     setIsLoading(true);
     async function getAllProducts() {
       try {
-        const response = await productApi.getAllProducts(page, 24);
+        const response = await productApi.getAllProducts(page-1, 8);
         if (response && isSubscribe) {
-          const { data, count } = response.data;
+          const { data, metadata } = response.data;
           setList(data);
-          setTotal(count);
+          setTotal(metadata.total);
           setIsLoading(false);
         }
       } catch (error) {
@@ -37,7 +37,7 @@ function AllProduct() {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      const { avt, name, price, discount, stock, _id } = product;
+      const { avt, name, price, discount, quantity, _id } = product;
       return (
         <Col key={index} span={24} sm={12} lg={8} xl={6}>
           <Link to={`/product/${_id}`}>
@@ -45,7 +45,7 @@ function AllProduct() {
               className="m-auto"
               name={name}
               price={price}
-              stock={stock}
+              stock={quantity}
               avtUrl={avt}
               discount={discount}
               height={400}
@@ -75,7 +75,7 @@ function AllProduct() {
             <Pagination
               className="t-center"
               current={page}
-              pageSize={24}
+              pageSize={8}
               total={total}
               onChange={(p) => setPage(p)}
               showSizeChanger={false}
