@@ -15,7 +15,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import defaultAvt from 'assets/imgs/default-avt.png';
 import logoUrl from 'assets/imgs/logo.png';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dashboard from './Dashboard';
 import './index.scss';
 import Login from './Login';
@@ -23,24 +23,30 @@ const AddProduct = React.lazy(() => import('./ProductPage/ProductAddForm'));
 const SeeProduct = React.lazy(() => import('./ProductPage/SeeProduct'));
 const AdminUser = React.lazy(() => import('./AdminUser'));
 const CustomerList = React.lazy(() => import('./CustomersList'));
-const OrderList = React.lazy(() => import('./OrderList'));
+const ProductList = React.lazy(() => import('./ProductList'));
+const CategoryList = React.lazy(() => import('./CategoryList'));
+import { Route, Switch, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const mainColor = '#141428';
 const menuList = [
   {
-    key: 'd',
+    key: 'dashboard',
     title: 'Dashboard',
     icon: <DashboardOutlined />,
     children: [],
   },
   {
-    key: 'p',
+    key: 'category',
+    title: 'Category',
+    icon: <ShoppingCartOutlined />,
+    children: [],
+  },
+  {
+    key: 'product',
     title: 'Products',
     icon: <ShoppingCartOutlined />,
-    children: [
-      { key: 'p0', title: 'See', icon: <EyeOutlined /> },
-      { key: 'p1', title: 'Add', icon: <PlusCircleOutlined /> },
-    ],
+    children: [],
   },
   {
     key: 'c',
@@ -68,7 +74,11 @@ const menuList = [
   },
 ];
 
-function AdminPage() {
+function AdminPage(props) {
+  const history = useHistory();
+  const match = props.match;
+  const authenticate = useSelector((state) => state.authenticate);
+  console.log(authenticate)
   const [keyMenu, setKeyMenu] = useState('d');
   const [isLogin, setIsLogin] = useState(() => {
     const isLogin = localStorage.getItem('admin');
@@ -78,10 +88,20 @@ function AdminPage() {
     const admin = localStorage.getItem('admin');
     return admin ? admin : 'Admin';
   });
+
+  useEffect(() => {
+    const url = window.location.href.split('/');
+    if (url[url.length -1] === ''|| url[url.length -1] === 'admin') {
+      setKeyMenu('dashboard');
+    } else {
+      setKeyMenu(url[url.length -1])
+    }
+  }, [])
   // fn: Xử lý khi chọn item
   const handleSelected = (e) => {
     const { key } = e;
     setKeyMenu(key);
+    history.push('/admin/' + key)
   };
 
   // fn: Show Title Selected
@@ -122,23 +142,28 @@ function AdminPage() {
 
   // fn: render component tương ứng
   const renderMenuComponent = (key) => {
-    switch (key) {
-      case 'd':
-        return <Dashboard />;
-      case 'p0':
-        return <SeeProduct />;
-      case 'p1':
-        return <AddProduct />;
-      case 'a':
-        return <AdminUser />;
-      case 'c':
-        return <CustomerList />;
-      case 'o':
-        return <OrderList />;
-      default:
-        break;
-    }
-  };
+
+   // return ();
+
+    // switch (key) {
+    //   case 'd':
+    //     return <Dashboard />;
+    //   case 'category':
+    //     return <CategoryList/>;
+    //   case 'p0':
+    //     return <SeeProduct />;
+    //   case 'p1':
+    //     return <AddProduct />;
+    //   case 'a':
+    //     return <AdminUser />;
+    //   case 'c':
+    //     return <CustomerList />;
+    //   case 'o':
+    //     return <OrderList />;
+    //   default:
+    //     break;
+    // }
+  }
 
   // event: Login với quyền admin (props > Login)
   const onLogin = (isLogin, name) => {
@@ -154,6 +179,8 @@ function AdminPage() {
     setIsLogin(false);
     localStorage.removeItem('admin');
   };
+
+  console.log(match.path)
 
   return (
     <div className="Admin-Page" style={{ backgroundColor: '#e5e5e5' }}>
@@ -209,13 +236,22 @@ function AdminPage() {
                 backgroundColor: mainColor,
                 flexBasis: '200px',
               }}
-              defaultSelectedKeys={keyMenu}
+              selectedKeys={keyMenu}
               mode="inline">
               {renderMenuItem()}
             </Menu>
 
             {/* main contents */}
-            <div className="flex-grow-1">{renderMenuComponent(keyMenu)}</div>
+            <div className="flex-grow-1">
+              <Switch>
+                <Route key={"category"} path={`${match.path}/category`} exact={true} component={CategoryList} />
+                <Route key={"product"} path={`${match.path}/product`} exact={true} component={ProductList} />
+                <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
+                <Route>
+                  <Dashboard />
+                </Route>
+              </Switch>
+            </div>
           </div>
         </>
       )}

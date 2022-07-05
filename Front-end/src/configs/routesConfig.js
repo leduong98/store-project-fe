@@ -49,8 +49,7 @@ const routes = [
   },
   {
     path: constants.ROUTES.ADMIN,
-    exact: true,
-    main: () => <AdminPage />,
+    main: props  => <AdminPage {...props} />,
   },
   {
     path: constants.ROUTES.CART,

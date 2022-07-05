@@ -1,6 +1,7 @@
 import axiosClient from './axiosClient';
+import MAX_JAVA_INTEGER from '../constants/extend_constant'
 
-const ADMIN_API_ENDPOINT = '/admin';
+const ADMIN_API_ENDPOINT = '/user';
 
 const adminApi = {
   // fn: thêm sản phẩm
@@ -64,6 +65,30 @@ const adminApi = {
     const url = ADMIN_API_ENDPOINT + '/order';
     return axiosClient.post(url, { id, orderStatus });
   },
+
+  getCategoryList: (page = 0, size = MAX_JAVA_INTEGER) => {
+    const url = '/category/all';
+    return axiosClient.get(url, { params: {
+      page: page,
+      size: size
+    } });
+  },
+
+  insertCategory: (data) => {
+    const url = '/category';
+    return axiosClient.post(url, data);
+  },
+
+  updateCategory: (data) => {
+    const url = '/category/' + data.id;
+    return axiosClient.patch(url, data);
+  },
+
+  deleteCategory: (id) => {
+    const url = '/category/' + id;
+    return axiosClient.delete(url);
+  },
+
 };
 
 export default adminApi;

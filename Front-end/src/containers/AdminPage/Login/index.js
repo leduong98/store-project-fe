@@ -24,10 +24,10 @@ function Login(props) {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Form.Item
-            label="Username"
-            name="userName"
+            label="Email"
+            name="email"
             rules={[
-              { required: true, message: 'Please input your username!' },
+              { required: true, message: 'Please input your email!' },
             ]}>
             <Input />
           </Form.Item>
