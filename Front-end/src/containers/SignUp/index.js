@@ -49,7 +49,7 @@ function SignUp() {
     email: '',
     password: '',
     confirmPassword: '',
-    fullname: '',
+    full_name: '',
     address: '',
     phone:''
   };
@@ -62,7 +62,7 @@ function SignUp() {
       .trim()
       .required('* Email bạn là gì ?')
       .email('* Email không hợp lệ !'),
-    fullname: Yup.string()
+    full_name: Yup.string()
       .trim()
       .required('* Tên bạn là gì ?')
       .matches(
@@ -185,7 +185,7 @@ function SignUp() {
                     <Col span={24}>
                       {/* full name filed */}
                       <FastField
-                        name="fullname"
+                        name="full_name"
                         component={InputField}
                         className="input-form-common"
                         placeholder="Họ và tên *"

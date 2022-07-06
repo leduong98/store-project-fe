@@ -64,9 +64,9 @@ function ProductView(props) {
       </div>
 
       {/* Số lượng hàng còn, chỉ hiển thị khi còn ít hơn 5 */}
-      {stock <= 5 && stock > 0 && (
+      {stock > 0 && (
         <div className="Product-View-stock font-size-14px">
-          chỉ còn {stock} sản phẩm
+          còn {stock} sản phẩm
         </div>
       )}
 
