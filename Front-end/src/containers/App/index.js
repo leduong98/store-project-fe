@@ -24,14 +24,12 @@ function App() {
 
   useEffect(() => {
     //authentication
-    {debugger}
     dispatch(authActions.getIsAuth());
     return () => {};
   }, []);
 
   useEffect(() => {
     //get user -> store redux
-    {debugger}
     if (isAuth) dispatch(userActions.getUserRequest());
     return () => {};
   }, [isAuth]);
