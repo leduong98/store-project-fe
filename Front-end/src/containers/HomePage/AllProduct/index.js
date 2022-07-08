@@ -37,10 +37,10 @@ function AllProduct() {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      const { avt, name, price, discount, quantity, _id } = product;
+      const { avt, name, price, discount, quantity, id } = product;
       return (
         <Col key={index} span={24} sm={12} lg={8} xl={6}>
-          <Link to={`/product/${_id}`}>
+          <Link to={`/product/${id}`}>
             <ProductView
               className="m-auto"
               name={name}

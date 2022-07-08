@@ -7,7 +7,7 @@ const accountApi = {
   // fn: đăng ký
   postSignUp: (registerRequest) => {
     const url = ACCOUNT_API_ENDPOINT + '/register';
-    return axiosClient.post(url, registerRequest.registerRequest);
+    return axiosClient.post(url, registerRequest);
   },
 
   // fn: gửi mã xác nhận lấy lại mật khẩu
