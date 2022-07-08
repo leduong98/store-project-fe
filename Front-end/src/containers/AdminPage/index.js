@@ -19,8 +19,7 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './Dashboard';
 import './index.scss';
 import Login from './Login';
-const AddProduct = React.lazy(() => import('./ProductPage/ProductAddForm'));
-const SeeProduct = React.lazy(() => import('./ProductPage/SeeProduct'));
+const TransactionList = React.lazy(() => import('./TransactionList'));
 const AdminUser = React.lazy(() => import('./AdminUser'));
 const CustomerList = React.lazy(() => import('./CustomersList'));
 const ProductList = React.lazy(() => import('./ProductList'));
@@ -45,6 +44,12 @@ const menuList = [
   {
     key: 'product',
     title: 'Products',
+    icon: <ShoppingCartOutlined />,
+    children: [],
+  },
+  {
+    key: 'transaction',
+    title: 'Transactions',
     icon: <ShoppingCartOutlined />,
     children: [],
   },
@@ -77,8 +82,7 @@ const menuList = [
 function AdminPage(props) {
   const history = useHistory();
   const match = props.match;
-  const authenticate = useSelector((state) => state.authenticate);
-  console.log(authenticate)
+  const user = useSelector((state) => state.user);
   const [keyMenu, setKeyMenu] = useState('d');
   const [isLogin, setIsLogin] = useState(() => {
     const isLogin = localStorage.getItem('admin');
@@ -216,7 +220,7 @@ function AdminPage(props) {
               </a>
               <div className="user-admin p-r-24 t-color-primary font-weight-500">
                 <Avatar size={36} className="m-r-10" src={defaultAvt} />
-                <span className="user-admin-title">{adminName}</span>
+                <span className="user-admin-title">{user?.full_name}</span>
               </div>
               <Button onClick={onLogout} className="m-r-44" type="dashed">
                 Đăng xuất
@@ -246,6 +250,7 @@ function AdminPage(props) {
               <Switch>
                 <Route key={"category"} path={`${match.path}/category`} exact={true} component={CategoryList} />
                 <Route key={"product"} path={`${match.path}/product`} exact={true} component={ProductList} />
+                <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
                   <Dashboard />

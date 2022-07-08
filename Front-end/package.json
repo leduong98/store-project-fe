@@ -39,7 +39,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.2.2",
+    "@ant-design/icons": "^4.7.0",
+    "@tinymce/tinymce-react": "^4.1.0",
     "antd": "^4.12.3",
     "axios": "^0.19.2",
     "chart.js": "^2.9.4",
@@ -49,7 +50,7 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.22",
-    "react-notifications": "^1.7.3",
+    "react-hook-form": "^7.33.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",

@@ -42,7 +42,7 @@ const getIsAuth = () => {
   return async (dispatch) => {
     try {
       const result = await loginApi.getAuth();
-      dispatch(setIsAuth(result.data.isAuth));
+      dispatch(setIsAuth(result.data.id !=null && result.data.id > 0));
     } catch (error) {
       if (error.response) {
         //Unauthorized -> refresh token

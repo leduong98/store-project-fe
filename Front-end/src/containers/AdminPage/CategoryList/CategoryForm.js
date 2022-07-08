@@ -9,7 +9,8 @@ const CategoryForm = (props) => {
     const { handleSubmit, control, reset, formState: { errors }, setValue } = useForm({
         defaultValues: {
             name: '',
-            position: 0
+            position: 0,
+            product_detail: ''
         }
     })
 
@@ -51,11 +52,22 @@ const CategoryForm = (props) => {
                         name="position"
                         control={control}
                         rules={{ required: true, min: 1, max: 100 }}
-                        render={({ field }) => <InputNumber {...field} />}
+                        render={({ field }) => <InputNumber style={{width: '100%'}} {...field} />}
                     />
                     {errors?.position ?.type === 'required' && <p><Text type='danger'>Vị trí không được bỏ trống</Text></p>}
                     {errors?.position ?.type === 'min' && <p><Text type='danger'>Vị trí phải lớn hơn hoặc bằng 1</Text></p>}
                     {errors?.position ?.type === 'max' && <p><Text type='danger'>Vị trí phải nhỏ hơn hoặc bằng 100</Text></p>}
+                </Col>
+                <Col span={24}>
+                <Title level={5}>Các thông số kĩ thuật:</Title>
+                <h5>* Cách nhau bởi dấu phẩy</h5>
+                    <Controller
+                        name="product_detail"
+                        control={control}
+                        rules={{ required: true, min: 1, max: 100 }}
+                        render={({ field }) => <Input {...field} />}
+                    />
+                    {errors?.product_detail ?.type === 'required' && <p><Text type='danger'>Các thông số không được bỏ trống</Text></p>}
                 </Col>
             </Row>
 

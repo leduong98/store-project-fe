@@ -2,7 +2,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import queryString from 'query-string';
 
-const baseURL = "http://localhost:8080";
+export const baseURL = "http://localhost:8080";
 
 //Set up default config for http request
 // Tao ra 1 object dung chung cho moi noi can import no

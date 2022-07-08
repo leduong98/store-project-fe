@@ -1,7 +1,8 @@
 import axiosClient from './axiosClient';
-import MAX_JAVA_INTEGER from '../constants/extend_constant'
 
 const ADMIN_API_ENDPOINT = '/user';
+
+const MAX_JAVA_INTEGER = 2147483647
 
 const adminApi = {
   // fn: thêm sản phẩm
@@ -68,10 +69,12 @@ const adminApi = {
 
   getCategoryList: (page = 0, size = MAX_JAVA_INTEGER) => {
     const url = '/category/all';
-    return axiosClient.get(url, { params: {
-      page: page,
-      size: size
-    } });
+    return axiosClient.get(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    });
   },
 
   insertCategory: (data) => {
@@ -87,6 +90,84 @@ const adminApi = {
   deleteCategory: (id) => {
     const url = '/category/' + id;
     return axiosClient.delete(url);
+  },
+
+  getAllProduct: () => {
+    const url = '/product/all';
+    return axiosClient.get(url);
+  },
+
+  insertProduct: (data) => {
+    const url = '/product';
+    return axiosClient.post(url, data);
+  },
+
+  updateProduct: (data) => {
+    const url = '/product/' + data.id;
+    return axiosClient.patch(url, data);
+  },
+
+  deleteProduct: (id) => {
+    const url = '/product/' + id;
+    return axiosClient.delete(url);
+  },
+
+  uploadFile: (file) => {
+    const url = '/file';
+    const formData = new FormData();
+
+    formData.append("file", file);
+    return axiosClient.post(url, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+  });
+  },
+
+  getAllDiscount: (productId, page = 0, size = MAX_JAVA_INTEGER) => {
+    const url = '/discount/filter';
+    return axiosClient.get(url, {
+      params: {
+        page: page,
+        size: size,
+        productId: productId
+      }
+    });
+  },
+
+  insertDiscount: (data) => {
+    const url = '/discount';
+    return axiosClient.post(url, data);
+  },
+
+  updateDiscount: (data) => {
+    const url = '/discount/' + data.id;
+    return axiosClient.patch(url, data);
+  },
+
+  deleteDiscount: (id) => {
+    const url = '/discount/' + id;
+    return axiosClient.delete(url);
+  },
+
+  getAllTransaction: (page = 0, size = MAX_JAVA_INTEGER) => {
+    const url = '/order/all';
+    return axiosClient.get(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    });
+  },
+
+  updateStatusTransaction: (id, data) => {
+    const url = `/order/${id}/status`;
+    return axiosClient.post(url, data);
+  },
+
+  getTransactionById: (id) => {
+    const url = `/order/${id}`;
+    return axiosClient.get(url);
   },
 
 };

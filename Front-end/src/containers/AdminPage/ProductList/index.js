@@ -1,17 +1,25 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, Popconfirm, Row, Spin, Table } from 'antd';
+import { Button, Image, message, Modal, Popconfirm, Row, Spin, Table } from 'antd';
 import adminApi from 'apis/adminApi';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import commonReducers from 'reducers/common';
+import { baseURL } from '../../../apis/axiosClient';
+import DiscountList from './DiscountList';
 import ProductForm from './ProductForm';
 
 
 function ProductList() {
+  const dispatch = useDispatch();
   const [dataColumn, setDataColumn] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [action, setAction] = useState('insert');
   const [item, setItem] =useState(null);
   const [page, setPage] = useState(1);
+  const categoryList = useSelector((state) => state.common?.categoryList);
+  const [visibleDiscount, setVisibleDicount] = useState(false);
+  const [productId, setProductId] = useState(0)
 
   const columns = [
     {
@@ -19,21 +27,57 @@ function ProductList() {
       key: 'id',
       dataIndex: 'id',
       align: 'center',
+      width: '5%'
+    },
+    {
+      title: 'Tên sản phẩm',
+      key: 'name',
+      align: 'left',
+      dataIndex: 'name',
+      width: '20%'
+    },
+    {
+      title: 'Ảnh',
+      key: 'image',
+      align: 'center',
+      dataIndex: 'image',
+      width: '10%',
+      render: (_v, records) => (<Image
+        width={100}
+        src={baseURL + records.image}
+      />)
+    },
+    {
+      title: 'Giá',
+      key: 'price',
+      align: 'center',
+      dataIndex: 'price',
       width: '10%'
     },
     {
-      title: 'Tên',
-      key: 'name',
+      title: 'Số lượng',
+      key: 'quantity',
       align: 'center',
-      dataIndex: 'name',
-      width: '40%'
+      dataIndex: 'quantity',
+      width: '8%'
     },
     {
-      title: 'Vị trí',
-      key: 'position',
+      title: 'Category',
+      key: 'category',
       align: 'center',
-      dataIndex: 'position',
-      width: '20%'
+      dataIndex: 'category',
+      width: '10%',
+      render: (_v, records) => categoryList ? categoryList.find(ele => ele.id === records.category.id).name : ''
+    },
+    {
+      title: 'Mã giảm giá',
+      key: 'discount',
+      align: 'center',
+      dataIndex: 'discount',
+      width: '20%',
+      render: (_v, records) => (
+        <Button type='link' onClick={() => openModalDiscount(records.id)}>Danh sách mã giảm giá</Button>
+      )
     },
     {
       title: 'Action',
@@ -59,20 +103,20 @@ function ProductList() {
 
   const onDelCategory = async (id) => {
     try {
-      const response = await adminApi.deleteCategory(id);
+      const response = await adminApi.deleteProduct(id);
       if (response && response.status === 200) {
-        message.success('Xoá categoty thành công');
+        message.success('Xoá product thành công');
         getCategoryList()
       }
     } catch (error) {
-      message.error('Xoá categoty thất bại');
+      message.error('Xoá product thất bại');
     }
   };
 
   async function getCategoryList() {
     try {
       setIsLoading(true);
-      const response = await adminApi.getCategoryList();
+      const response = await adminApi.getAllProduct();
       if (response) {
         const { data } = response.data;
         setDataColumn([...data]);
@@ -85,6 +129,7 @@ function ProductList() {
 
   useEffect(() => {
     getCategoryList();
+    dispatch(commonReducers.getListCategory());
   }, []);
 
   console.log(dataColumn)
@@ -94,6 +139,11 @@ function ProductList() {
     setAction(action);
     setItem(item);
     setVisible(true);
+  }
+
+  const openModalDiscount = (id) => {
+    setVisibleDicount(true);
+    setProductId(id)
   }
 
   const handleChangeTable = event => {
@@ -112,6 +162,11 @@ function ProductList() {
             </Button>
           </Row>
           <ProductForm value={item} visible={visible} cancel={(e) => setVisible(false)} action={action}  getList={() => getCategoryList()}/>
+          <Modal title={'Danh sách mã giảm giá'}
+            visible={visibleDiscount} onOk={ () => setVisibleDicount(false)} cancelButtonProps={{ style: { display: 'none' } }}  closable={false}
+            width={1200}>
+           <DiscountList productId={productId} />
+          </Modal>
           <Table
             columns={columns}
             dataSource={dataColumn}
