@@ -44,7 +44,7 @@ const ProductForm = (props) => {
     }, [props.value])
     const onSubmit = async data => {
         data = { ...data, 'json_type': 'product' }
-        data.detail = JSON.stringify(productDetail);
+        data.detail = JSON.stringify(productDetail.filter(item => productDetailModel.includes(item.name)));
         data.imageList = imageList.map(item => item.url).join(',');
         { debugger }
         if (props.action === 'insert') {
