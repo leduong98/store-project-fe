@@ -1,13 +1,16 @@
 import {
   BarChartOutlined,
+  ContactsOutlined,
   DashboardOutlined,
   EyeOutlined,
   HomeOutlined,
   IdcardOutlined,
+  MenuOutlined,
   NotificationOutlined,
   PlusCircleOutlined,
   ReconciliationOutlined,
   ShoppingCartOutlined,
+  TransactionOutlined,
   UserOutlined,
   SlidersOutlined,
 } from '@ant-design/icons';
@@ -40,7 +43,7 @@ const menuList = [
   {
     key: 'category',
     title: 'Category',
-    icon: <ShoppingCartOutlined />,
+    icon: <MenuOutlined />,
     children: [],
   },
   {
@@ -52,31 +55,13 @@ const menuList = [
   {
     key: 'transaction',
     title: 'Transactions',
-    icon: <ShoppingCartOutlined />,
+    icon: <TransactionOutlined />,
     children: [],
   },
   {
-    key: 'c',
-    title: 'Customers',
-    icon: <UserOutlined />,
-    children: [],
-  },
-  {
-    key: 'a',
-    title: 'Amin Users',
-    icon: <IdcardOutlined />,
-    children: [],
-  },
-  {
-    key: 'o',
-    title: 'Order List',
-    icon: <ReconciliationOutlined />,
-    children: [],
-  },
-  {
-    key: 'm',
-    title: 'Marketing',
-    icon: <NotificationOutlined />,
+    key: 'user',
+    title: 'Users',
+    icon: <ContactsOutlined />,
     children: [],
   },
   {
@@ -259,6 +244,7 @@ function AdminPage(props) {
                 <Route key={"category"} path={`${match.path}/category`} exact={true} component={CategoryList} />
                 <Route key={"product"} path={`${match.path}/product`} exact={true} component={ProductList} />
                 <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
+				<Route key={"user"} path={`${match.path}/user`} exact={true} component={TransactionList} />
                 <Route key={"slide"} path={`${match.path}/slide`} exact={true} component={SlideList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
