@@ -9,6 +9,7 @@ import {
   ReconciliationOutlined,
   ShoppingCartOutlined,
   UserOutlined,
+  SlidersOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
@@ -24,6 +25,7 @@ const AdminUser = React.lazy(() => import('./AdminUser'));
 const CustomerList = React.lazy(() => import('./CustomersList'));
 const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
+const SlideList = React.lazy(() => import('./SlideList'));
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -75,6 +77,12 @@ const menuList = [
     key: 'm',
     title: 'Marketing',
     icon: <NotificationOutlined />,
+    children: [],
+  },
+  {
+    key: 'slide',
+    title: 'Slide',
+    icon: <SlidersOutlined/>,
     children: [],
   },
 ];
@@ -251,6 +259,7 @@ function AdminPage(props) {
                 <Route key={"category"} path={`${match.path}/category`} exact={true} component={CategoryList} />
                 <Route key={"product"} path={`${match.path}/product`} exact={true} component={ProductList} />
                 <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
+                <Route key={"slide"} path={`${match.path}/slide`} exact={true} component={SlideList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
                   <Dashboard />
