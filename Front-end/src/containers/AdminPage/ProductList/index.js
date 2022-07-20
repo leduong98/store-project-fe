@@ -135,7 +135,6 @@ function ProductList() {
   console.log(dataColumn)
 
   const onClickOpenModal = (action, item = null) => {
-    console.log(item)
     setAction(action);
     setItem(item);
     setVisible(true);

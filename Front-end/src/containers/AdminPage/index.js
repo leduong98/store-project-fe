@@ -29,6 +29,7 @@ const CustomerList = React.lazy(() => import('./CustomersList'));
 const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
 const SlideList = React.lazy(() => import('./SlideList'));
+const UserList = React.lazy(() => import('./User'));
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -244,7 +245,7 @@ function AdminPage(props) {
                 <Route key={"category"} path={`${match.path}/category`} exact={true} component={CategoryList} />
                 <Route key={"product"} path={`${match.path}/product`} exact={true} component={ProductList} />
                 <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
-				        <Route key={"user"} path={`${match.path}/user`} exact={true} component={TransactionList} />
+				        <Route key={"user"} path={`${match.path}/user`} exact={true} component={UserList} />
                 <Route key={"slide"} path={`${match.path}/slide`} exact={true} component={SlideList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
