@@ -12,30 +12,6 @@ const SET_IS_AUTH = 'SET_IS_AUTH';
 
 //======= actions request (call API) =======//
 
-// refresh token nếu access token hết hạn không có
-const refreshToken = () => {
-  return async (dispatch) => {
-    try {
-      const refToken = localStorage.getItem(constants.REFRESH_TOKEN_KEY);
-      //if not exist refresh token in local storage -> set isAuth: false
-      if (!refToken) {
-        return dispatch(setIsAuth(false));
-      }
-      //else request refresh token
-      const result = await loginApi.postRefreshToken({
-        refresh_token: refToken,
-      });
-      //if success
-      if (result.status === 200) {
-        dispatch(setIsAuth(true));
-      } else {
-        dispatch(setIsAuth(false));
-      }
-    } catch (error) {
-      dispatch(setIsAuth(false));
-    }
-  };
-};
 
 // xác thực mã access token
 const getIsAuth = () => {

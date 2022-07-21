@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import './index.scss';
 import userReducers
   from "../../reducers/user";
+import jwt_decode from "jwt-decode";
 
 function Login() {
   const history = useHistory();
@@ -30,6 +31,11 @@ function Login() {
       setIsSubmitting(false);
       message.success('Đăng nhập thành công');
       localStorage.setItem(constants.ACCESS_TOKEN_KEY, data.access_token);
+      const decoded = jwt_decode(data.access_token);
+      if (decoded.role.name === "ADMIN"){
+        localStorage.setItem("isAdmin", "true")
+      }
+      localStorage.setItem("isAuth", "true")
       dispatch(userReducers.getUserRequest());
       dispatch(authReducers.setIsAuth(true));
       setTimeout(() => {

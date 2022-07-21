@@ -10,41 +10,31 @@ import { Link } from 'react-router-dom';
 import cartActions from 'reducers/carts';
 import './index.scss';
 
-// Hàm đếm số sản phẩm đó trong giỏ hàng
-function countItemInCart(productCode, carts) {
-  let count = 0;
-  if (carts) {
-    carts.forEach((item) => {
-      if (item.code === productCode) count += item.amount;
-    });
-  }
-  return count;
-}
+// // Hàm đếm số sản phẩm đó trong giỏ hàng
+// function countItemInCart(productCode, carts) {
+//   let count = 0;
+//   if (carts) {
+//     carts.forEach((item) => {
+//       if (item.code === productCode) count += item.amount;
+//     });
+//   }
+//   return count;
+// }
 
 function ProductOverview(props) {
   const { products } = props;
-  const {
-    _id,
-    avt,
-    name,
-    brand,
-    code,
-    price,
-    rate,
-    discount,
-    stock,
-  } = products.product;
+  const { id, name, detail, price, image, category, discounts, imageList, quantity, description } = products.product;
 
-  const { catalogs, ...productRest } = products.productDetail;
-  const imgList = [avt, ...catalogs];
-  const rateTotal = rate.reduce((a, b) => a + b, 0);
-  const priceBefore = price + (price * discount) / 100;
-  const rateAvg = helpers.calStar(rate);
+  // const { catalogs, ...productRest } = products.productDetail;
+  // const imgList = [avt, ...catalogs];
+  // const rateTotal = rate.reduce((a, b) => a + b, 0);
+  const priceBefore = price + (price * discounts) / 100;
+  // const rateAvg = helpers.calStar(rate);
 
   const [numOfProduct, setNumberOfProduct] = useState(1);
   const [avtIndex, setAvtIndex] = useState(0);
-  const carts = useSelector((state) => state.carts);
-  const currentStock = stock - countItemInCart(code, carts);
+  // const carts = useSelector((state) => state.carts);
+  // const currentStock = quantity - countItemInCart(code, carts);
 
   const dispatch = useDispatch();
 
@@ -81,14 +71,14 @@ function ProductOverview(props) {
   // fn: Thêm vào giỏ hàng
   const addCart = () => {
     let product = {
-      code,
-      name,
-      price,
-      amount: numOfProduct,
-      avt,
-      discount,
-      stock,
-      _id,
+      // code,
+      // name,
+      // price,
+      // amount: numOfProduct,
+      // avt,
+      // discount,
+      // stock,
+      // _id,
     };
     setNumberOfProduct(1);
     dispatch(cartActions.addToCart(product));
@@ -112,9 +102,9 @@ function ProductOverview(props) {
         <div className="d-flex w-100 bg-white p-b-16 p-t-8">
           {showCatalogs(imgList)}
         </div>
-        <div className="p-l-16 p-t-16 product-info">
-          {showOverviewInfo(productRest)}
-        </div>
+        {/*<div className="p-l-16 p-t-16 product-info">*/}
+        {/*  {showOverviewInfo(productRest)}*/}
+        {/*</div>*/}
       </Col>
 
       {/* Tên và thông tin cơ bản */}
@@ -125,30 +115,30 @@ function ProductOverview(props) {
         </h2>
 
         {/* Đánh giá sản phẩm */}
-        <div className="p-tb-8">
-          <Rate disabled defaultValue={rateAvg} allowHalf />
-          <a href="#evaluation" className="m-l-8">
-            (Có {rateTotal} đánh giá)
-          </a>
-        </div>
+        {/*<div className="p-tb-8">*/}
+        {/*  <Rate disabled defaultValue={rateAvg} allowHalf />*/}
+        {/*  <a href="#evaluation" className="m-l-8">*/}
+        {/*    (Có {rateTotal} đánh giá)*/}
+        {/*  </a>*/}
+        {/*</div>*/}
 
-        {/* Mã, thương hiệu */}
-        <div
-          className="font-size-16px font-weight-400"
-          style={{ color: '#aaa' }}>
-          Thương hiệu:
-          <span className="product-brand font-weight-500">&nbsp;{brand}</span>
-          &nbsp; | &nbsp;<span>{code}</span>
-        </div>
+        {/*/!* Mã, thương hiệu *!/*/}
+        {/*<div*/}
+        {/*  className="font-size-16px font-weight-400"*/}
+        {/*  style={{ color: '#aaa' }}>*/}
+        {/*  Thương hiệu:*/}
+        {/*  <span className="product-brand font-weight-500">&nbsp;{brand}</span>*/}
+        {/*  &nbsp; | &nbsp;<span>{code}</span>*/}
+        {/*</div>*/}
 
         {/* Giá */}
         <h1 className="product-price font-weight-700 p-tb-8">
           {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(priceBefore)}
         </h1>
-        {discount > 0 && price > 0 && (
+        {discounts > 0 && price > 0 && (
           <>
             <h3 className="font-weight-700" style={{ color: '#333' }}>
-              Bạn có 1 mã giảm giá {discount}% cho sản phẩm này
+              Bạn có 1 mã giảm giá {discounts}% cho sản phẩm này
             </h3>
             <div className="d-flex flex-direction-column m-t-8 m-b-16 p-tb-8 p-lr-16 discount">
               <span className="discount-price font-size-16px font-weight-700">
@@ -167,7 +157,7 @@ function ProductOverview(props) {
 
         {/* Chọn số lượng */}
         <div className="p-t-12 option">
-          {currentStock === 0 ? (
+          {quantity === 0 ? (
             <h3 className="m-r-8 m-t-8 font-size-18px" style={{ color: 'red' }}>
               <i>Sản phẩm hiện đang hết hàng !</i>
             </h3>
@@ -179,7 +169,7 @@ function ProductOverview(props) {
                 size="middle"
                 value={numOfProduct}
                 min={1}
-                max={currentStock}
+                max={quantity}
                 onChange={(value) => setNumberOfProduct(value)}
               />
             </>
@@ -187,11 +177,11 @@ function ProductOverview(props) {
         </div>
 
         {/* Button*/}
-        {price > 0 && currentStock > 0 ? (
+        {price > 0 && quantity > 0 ? (
           <div className="btn-group p-tb-16 d-flex justify-content-around">
             <Button
               onClick={addCart}
-              disabled={stock ? false : true}
+              disabled={quantity ? false : true}
               size="large"
               className="m-r-16 w-100 btn-group-item"
               style={{ backgroundColor: '#3555c5' }}>
@@ -212,7 +202,7 @@ function ProductOverview(props) {
             size="large"
             className="m-tb-16 w-100 btn-group-item"
             style={{ backgroundColor: '#3555c5' }}>
-            <a href="https://fb.com/TuanNguyen250400" target="blank">
+            <a href="https://fb.com/" target="blank">
               <PhoneOutlined style={{ fontSize: 18 }} className="m-r-8" /> LIÊN
               HỆ
             </a>

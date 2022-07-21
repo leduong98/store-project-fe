@@ -1,4 +1,5 @@
 import {
+  HomeOutlined,
   MenuOutlined,
   ReconciliationOutlined,
   SearchOutlined,
@@ -16,7 +17,6 @@ import {
   message,
 } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import loginApi from 'apis/loginApi';
 import defaultAvt from 'assets/imgs/default-avt.png';
 import logoUrl from 'assets/imgs/logo.png';
 import constants from 'constants/index';
@@ -44,12 +44,19 @@ function HeaderView() {
   const [isMdDevice, setIsMdDevice] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [isSmDevice, setIsSmDevice] = useState(false);
+  const isAdmin = localStorage.getItem("isAdmin")
+  const auth = localStorage.getItem("isAuth")
+
+  if (!(auth==="true")){
+    localStorage.removeItem("isAdmin");
+  }
 
   // event: log out
   const onLogout = async () => {
     try {
         message.success('Đăng xuất thành công', 2);
         localStorage.removeItem(constants.ACCESS_TOKEN_KEY);
+        localStorage.removeItem("isAuth")
         location.reload();
     } catch (error) {
       message.error('Đăng xuất thất bại', 2);
@@ -114,6 +121,22 @@ function HeaderView() {
             <Link to={constants.ROUTES.ACCOUNT + '/'}>Quản lý Tài khoản</Link>
           </Button>
         </Menu.Item>
+      )}
+      {isAdmin === "true" ? (
+        <Menu.Item>
+          <Button size="large" className="w-100 btn-secondary btn-back-view-dk" type="default">
+          <Link
+            className="d-flex navbar-tool-item p-l-0"
+            to={constants.ROUTES.ADMIN }>
+            <HomeOutlined  className="icon m-r-12" style={{color: "white"}}/>
+            <span className="title" style={{color: "white"}}>Trang quản trị</span>
+          </Link>
+          </Button>
+        </Menu.Item>
+      ) : (
+        <div>
+
+        </div>
       )}
     </Menu>
   );
@@ -221,7 +244,6 @@ function HeaderView() {
                         overflowCount={9}
                         offset={[18, -10]}
                       />
-
                       <span className="title">Giỏ hàng</span>
                     </Link>
                   </Dropdown>
@@ -284,7 +306,6 @@ function HeaderView() {
                     overflowCount={9}
                     offset={[36, -5]}
                   />
-
                   <span className="title">Giỏ hàng</span>
                 </Link>
               </Dropdown>

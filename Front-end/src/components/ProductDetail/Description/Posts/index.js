@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactHtmlParser from 'html-react-parser';
 
 function Posts(props) {
   const { content } = props;
@@ -9,23 +10,10 @@ function Posts(props) {
       {content == null ? (
         <h3 className="m-t-16">Thông tin đang được cập nhật</h3>
       ) : (
-        <>
-          <h2 className="m-t-16 m-b-8 font-weight-700">{content.title}</h2>
-          {content.desc &&
-            content.desc.map((item, index) => (
-              <div key={index}>
-                <p className="t-justify font-size-15px font-weight-500 desc-detail">
-                  {item.content}
-                </p>
-                <img
-                  className="trans-margin"
-                  style={{ maxHeight: 350, maxWidth: '100%' }}
-                  src={item.photo}
-                />
-              </div>
-            ))}
-        </>
-      )}
+        <div>
+          <br></br>
+          {ReactHtmlParser(content)}`
+        </div>)}
     </>
   );
 }

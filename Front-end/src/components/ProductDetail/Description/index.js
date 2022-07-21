@@ -7,7 +7,7 @@ import Posts from './Posts';
 import Specification from './Specification';
 
 function Description(props) {
-  const { specification, desc } = props;
+  const { specification ,desc } = props;
   const [isHideDesc, setIsHideDesc] = useState(false);
   const [isShowSeeMore, setIsShowSeeMore] = useState(false);
 
@@ -37,9 +37,10 @@ function Description(props) {
         <Posts content={desc} />
       </Col>
 
-      {/* Thông số kỹ thuật */}
+      {/*/!* Thông số kỹ thuật *!/*/}
       <Col span={24} md={8} className={`p-8 ${!isHideDesc ? 'hide-desc' : ''}`}>
         <h2 className="font-weight-700">Thông số kỹ thuật</h2>
+        <br/>
         <div className="underline-title"></div>
         <Specification data={specification} />
       </Col>

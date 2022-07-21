@@ -22,8 +22,8 @@ const productApi = {
 
   // api: Lấy 1 sản phẩm
   getProduct: (id) => {
-    const url = PRODUCT_API_URL;
-    return axiosClient.get(url, { params: { id } });
+    const url = PRODUCT_API_URL+"/"+id;
+    return axiosClient.get(url);
   },
 
   // api: Lấy danh sách sp, type = -1 : all, trừ sản phẩm có id

@@ -10,7 +10,7 @@ const axiosClient = axios.create({
   baseURL: baseURL + '/api',
   headers: {
     'content-type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token-camera') 
+    'Authorization': 'Bearer ' + localStorage.getItem('token-camera')
   },
   //query string dung de parse url thanh json thay cho axios (tranh tuong hop null url)
   paramsSerializer: (params) => queryString.stringify(params),

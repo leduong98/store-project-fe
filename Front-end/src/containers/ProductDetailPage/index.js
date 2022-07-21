@@ -16,7 +16,8 @@ function ProductDetailPage() {
       try {
         const result = await productApi.getProduct(id);
         if (result && isSubscribe) {
-          const { data } = result;
+          const data  = result.data;
+          console.log(JSON.stringify(data)+"data")
           setProduct(data);
         }
       } catch (error) {

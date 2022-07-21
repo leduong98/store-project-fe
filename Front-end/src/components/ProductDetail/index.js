@@ -12,11 +12,9 @@ import ProductOverview from './Overview';
 import ProductPolicy from './Policy';
 
 function ProductDetail(props) {
-  const { products } = props;
-  const { productDetail, productDesc } = products;
-  let { catalogs, ...restDetail } = productDetail;
-  const { name, brand, type, _id, rate, otherInfo } = products.product;
-  restDetail = helpers.convertProductValue(type, restDetail);
+  const products = props;
+  const { id, name, detail, price, image, category, discounts, imageList, quantity, description } = products.products;
+  console.log(JSON.stringify(name)+"----------------")
   // rendering...
   return (
     <div className="Product-Detail-View container m-t-20">
@@ -31,9 +29,9 @@ function ProductDetail(props) {
         </Col>
 
         {/* Thông tin cơ bản của sản phẩm */}
-        <Col span={24} md={18}>
-          <ProductOverview products={products} />
-        </Col>
+        {/*<Col span={24} md={18}>*/}
+        {/*  <ProductOverview products={products} />*/}
+        {/*</Col>*/}
 
         {/* Chính sách */}
         <Col span={24} md={6}>
@@ -43,25 +41,25 @@ function ProductDetail(props) {
         {/* Mô tả chi tiết sản phẩm */}
         <Col span={24}>
           <Description
-            specification={{ brand, otherInfo, ...restDetail }}
-            desc={productDesc}
+            specification={detail}
+            desc={description}
           />
         </Col>
 
         {/* Nhận xét của khách hàng */}
-        <Col span={24} id="evaluation">
-          <Evaluation rates={rate} productId={_id} />
-        </Col>
+        {/*<Col span={24} id="evaluation">*/}
+        {/*  <Evaluation rates={rate} productId={id} />*/}
+        {/*</Col>*/}
 
-        {/* danh sách sản phẩm tương tự */}
-        <Col span={24}>
-          <RelatedProduct
-            title="Sản phẩm tương tự"
-            type={type}
-            brand={brand}
-            id={_id}
-          />
-        </Col>
+      {/*  /!* danh sách sản phẩm tương tự *!/*/}
+      {/*  <Col span={24}>*/}
+      {/*    <RelatedProduct*/}
+      {/*      title="Sản phẩm tương tự"*/}
+      {/*      type={type}*/}
+      {/*      brand={brand}*/}
+      {/*      id={_id}*/}
+      {/*    />*/}
+      {/*  </Col>*/}
       </Row>
     </div>
   );
