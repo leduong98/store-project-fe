@@ -170,6 +170,51 @@ const adminApi = {
     return axiosClient.get(url);
   },
 
+  getSlideList: (page = 0, size = MAX_JAVA_INTEGER) => {
+    const url = '/slider/all';
+    return axiosClient.get(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    });
+  },
+
+  changeStatusSlide: (data) => {
+    const url = '/slider/' + data + '/status/';
+    return axiosClient.post(url, data);
+  },
+
+  insertSlide: (data) => {
+    const url = '/slider';
+    return axiosClient.post(url, data);
+  },
+
+  updateSlide: (data) => {
+    const url = '/slider/' + data.id;
+    return axiosClient.patch(url, data);
+  },
+
+  deleteSlide: (id) => {
+    const url = '/slider/' + id;
+    return axiosClient.delete(url);
+  },
+
+  getUserList: (page = 0, size = MAX_JAVA_INTEGER) => {
+    const url = '/user/all';
+    return axiosClient.get(url, {
+      params: {
+        page: page,
+        size: size
+      }
+    });
+  },
+
+  changeStatusUser: (data) => {
+    const url = '';
+    return axiosClient.post(url, data);
+  },
+
 };
 
 export default adminApi;

@@ -16,6 +16,11 @@ export const TransactionStatus = {
   CANCEL: "Đã hủy"
 }
 
+export const TransactionStatusUser = {
+  ACTIVE: "ACTIVE",
+  NOT_ACTIVE: 'NOT ACTIVE'
+}
+
 export default {
   MAX_JAVA_INTEGER: 2147483647
 };

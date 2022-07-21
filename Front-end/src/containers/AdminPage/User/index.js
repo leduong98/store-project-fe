@@ -2,11 +2,11 @@ import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-de
 import { Button, Input, message, Popconfirm, Row, Spin, Table } from 'antd';
 import adminApi from 'apis/adminApi';
 import React, { useEffect, useMemo, useState } from 'react';
-import { TransactionStatus } from '../../../constants/extend_constant';
-import ViewTranssaction from './ViewTransaction';
+import { TransactionStatusUser } from '../../../constants/extend_constant';
+import UserDetail from '../User/UserDetail';
 
 
-function TransactionList() {
+function UserList() {
   const [dataColumn, setDataColumn] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
@@ -27,15 +27,14 @@ function TransactionList() {
       title: 'Tài khoản',
       key: 'name',
       align: 'center',
-      dataIndex: 'name',
-      width: '20%',
-      render: (e, record) => record.user.full_name
+      dataIndex: 'full_name',
+      width: '20%'
     },
     {
       title: 'Email',
       key: 'email',
       align: 'center',
-      dataIndex: 'user_email',
+      dataIndex: 'email',
       filterSearch: true,
       filterMode: 'menu',
       onFilter: (value, record) => record.user_email.includes(value),
@@ -45,10 +44,10 @@ function TransactionList() {
       title: 'Số điện thoại',
       key: 'phone',
       align: 'center',
-      dataIndex: 'user_phone',
+      dataIndex: 'phone',
       filterSearch: true,
       filterMode: 'menu',
-      onFilter: (value, record) => record.user_phone.includes(value),
+      onFilter: (value, record) => record.phone.includes(value),
       width: '20%'
     },
     {
@@ -58,35 +57,18 @@ function TransactionList() {
       dataIndex: 'status',
       filters: [
         {
-          text: TransactionStatus['WAIT_FOR_APPROVE'],
-          value: 'WAIT_FOR_APPROVE',
+          text: TransactionStatusUser['ACTIVE'],
+          value: 'ACTIVE',
         },
         {
-          text: TransactionStatus['APPROVED'],
-          value: 'APPROVED',
-        },
-        {
-          text: TransactionStatus['TRANSPORT'],
-          value: 'TRANSPORT',
-        },
-        {
-          text: TransactionStatus['SUCCESSFUL_TRANSPORT'],
-          value: 'SUCCESSFUL_TRANSPORT',
-        },
-        {
-          text: TransactionStatus['RECEIVED'],
-          value: 'RECEIVED',
-        },
-        {
-          text: TransactionStatus['CANCEL'],
-          value: 'CANCEL',
+          text: TransactionStatusUser['NOT_ACTIVE'],
+          value: 'NOT ACTIVE',
         }
       ],
-      defaultFilteredValue : ['WAIT_FOR_APPROVE', 'APPROVED'], 
+      defaultFilteredValue:  ['ACTIVE'],
         onFilter: (value, record) => {
           return record.status && record.status.indexOf(value) === 0
         },
-      render: (v, record) => TransactionStatus[record.status],
       width: '10%'
     },
     {
@@ -101,22 +83,16 @@ function TransactionList() {
     },
   ];
 
-  const onDelCategory = async (id) => {
-    try {
-      const response = await adminApi.deleteCategory(id);
-      if (response && response.status === 200) {
-        message.success('Xoá categoty thành công');
-        getCategoryList()
-      }
-    } catch (error) {
-      message.error('Xoá categoty thất bại');
-    }
-  };
+  const onClickOpenModal = (action, item = null) => {
+    setAction(action);
+    setItem(item);
+    setVisible(true);
+  }
 
-  async function getCategoryList() {
+  async function getUserList() {
     try {
       setIsLoading(true);
-      const response = await adminApi.getAllTransaction();
+      const response = await adminApi.getUserList();
       if (response) {
         const { data } = response.data;
         setDataColumn([...data]);
@@ -128,21 +104,8 @@ function TransactionList() {
   }
 
   useEffect(() => {
-    getCategoryList();
+    getUserList();
   }, []);
-
-  const onClickOpenModal = (action, item = null) => {
-    console.log(item)
-    setAction(action);
-    setItem(item?.id);
-    setVisible(true);
-  }
-
-  const handleChangeTable = event => {
-    setPage(event.current)
-  }
-
-  const memoForm = useMemo(() => <ViewTranssaction value={item} visible={visible} cancel={(e) => setVisible(false)} action={action}  getList={() => getCategoryList()}/>, [visible, item])
 
   return (
     <>
@@ -153,11 +116,10 @@ function TransactionList() {
           <Input style={{width: '300px'}} value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Nhập tên, email hoặc số điện thoại"/>
           <br></br>
           <br></br>
-          {memoForm}
+          <UserDetail value={item} visible={visible} onCancel={e => setVisible(false)}/>
           <Table
             columns={columns}
-            dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.user_phone && ele.user_phone.includes(searchValue)) || (ele.user.full_name && ele.user.full_name.includes(searchValue)) || (ele.user_email && ele.user_email.includes(searchValue)))}
-            onChange={handleChangeTable}
+            dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.phone && ele.phone.includes(searchValue)) || (ele.full_name && ele.full_name.includes(searchValue)) || (ele.email && ele.email.includes(searchValue)))}
             pagination={{ showLessItems: true, position: ['bottomCenter'], pageSize: 10, current: page }}
           />
         </div>
@@ -166,4 +128,4 @@ function TransactionList() {
   );
 }
 
-export default TransactionList;
+export default UserList;
