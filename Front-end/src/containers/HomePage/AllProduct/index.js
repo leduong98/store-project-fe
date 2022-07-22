@@ -3,6 +3,7 @@ import productApi from 'apis/productApi';
 import ProductView from 'components/ProductView';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {baseURL} from "../../../apis/axiosClient";
 
 function AllProduct() {
   const [list, setList] = useState([]);
@@ -37,7 +38,7 @@ function AllProduct() {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      const { avt, name, price, discount, quantity, id } = product;
+      const { image, name, price, discount, quantity, id } = product;
       return (
         <Col key={index} span={24} sm={12} lg={8} xl={6}>
           <Link to={`/product/${id}`}>
@@ -46,7 +47,7 @@ function AllProduct() {
               name={name}
               price={price}
               stock={quantity}
-              avtUrl={avt}
+              avtUrl={baseURL + image}
               discount={discount}
               height={400}
             />

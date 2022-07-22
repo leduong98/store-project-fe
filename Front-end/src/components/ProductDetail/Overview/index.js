@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cartActions from 'reducers/carts';
 import './index.scss';
+import {baseURL} from "../../../apis/axiosClient";
 
 // // Hàm đếm số sản phẩm đó trong giỏ hàng
 // function countItemInCart(productCode, carts) {
@@ -23,12 +24,15 @@ import './index.scss';
 
 function ProductOverview(props) {
   const { products } = props;
-  const { id, name, detail, price, image, category, discounts, imageList, quantity, description } = products.product;
+  console.log(products.products)
+  const { id, name, detail, price, image, category, discounts, imageList, quantity, description } = products.products;
+  const imageLists = imageList.split(",");
+  const fullImage = [image, ...imageLists]
+  const targetDiscount =  discounts ? discounts.find(ele => (new Date()).getTime() >= (new Date(ele.startDate)).getTime() && (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null;
 
-  // const { catalogs, ...productRest } = products.productDetail;
-  // const imgList = [avt, ...catalogs];
+  console.log(targetDiscount.discount+"targetDiscount")
   // const rateTotal = rate.reduce((a, b) => a + b, 0);
-  const priceBefore = price + (price * discounts) / 100;
+  const priceAfter = price - (targetDiscount ? ((price * targetDiscount.discount) / 100) : 0);
   // const rateAvg = helpers.calStar(rate);
 
   const [numOfProduct, setNumberOfProduct] = useState(1);
@@ -43,29 +47,12 @@ function ProductOverview(props) {
     return catalog.map((item, index) => (
       <Image
         key={index}
-        src={item}
+        src={baseURL+item}
         width={48}
         className={`catalog-item p-8 ${index === avtIndex ? 'active' : ''}`}
         onMouseEnter={() => setAvtIndex(index)}
       />
     ));
-  };
-
-  // fn: hiển thị vài thông tin cơ bản của sản phẩm
-  const showOverviewInfo = (product) => {
-    let result = [];
-    let i = 0;
-    for (let key in product) {
-      if (i >= 5) break;
-      if (typeof product[key] === 'string') {
-        result.push(
-          <p key={i++} className="m-b-8">
-            {`- ${helpers.convertProductKey(key)}: ${product[key]}`}
-          </p>,
-        );
-      }
-    }
-    return result;
   };
 
   // fn: Thêm vào giỏ hàng
@@ -88,7 +75,7 @@ function ProductOverview(props) {
   // rendering ...
   return (
     <Row className="Product-Overview bg-white p-16">
-      {/* Hình ảnh và thông số cơ bản sản phẩm */}
+       {/*Hình ảnh và thông số cơ bản sản phẩm */}
       <Col span={24} md={8}>
         <div
           style={{ height: 268 }}
@@ -96,15 +83,12 @@ function ProductOverview(props) {
           <Image
             style={{ maxHeight: '100%' }}
             fallback={ImgLoadFailed}
-            src={imgList[avtIndex]}
+            src={baseURL+fullImage[avtIndex]}
           />
         </div>
         <div className="d-flex w-100 bg-white p-b-16 p-t-8">
-          {showCatalogs(imgList)}
+          {showCatalogs(fullImage)}
         </div>
-        {/*<div className="p-l-16 p-t-16 product-info">*/}
-        {/*  {showOverviewInfo(productRest)}*/}
-        {/*</div>*/}
       </Col>
 
       {/* Tên và thông tin cơ bản */}
@@ -122,30 +106,21 @@ function ProductOverview(props) {
         {/*  </a>*/}
         {/*</div>*/}
 
-        {/*/!* Mã, thương hiệu *!/*/}
-        {/*<div*/}
-        {/*  className="font-size-16px font-weight-400"*/}
-        {/*  style={{ color: '#aaa' }}>*/}
-        {/*  Thương hiệu:*/}
-        {/*  <span className="product-brand font-weight-500">&nbsp;{brand}</span>*/}
-        {/*  &nbsp; | &nbsp;<span>{code}</span>*/}
-        {/*</div>*/}
-
         {/* Giá */}
         <h1 className="product-price font-weight-700 p-tb-8">
-          {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(priceBefore)}
+          {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(price)}
         </h1>
-        {discounts > 0 && price > 0 && (
+        {targetDiscount.discount > 0 && price > 0 && (
           <>
             <h3 className="font-weight-700" style={{ color: '#333' }}>
-              Bạn có 1 mã giảm giá {discounts}% cho sản phẩm này
+              Bạn có 1 mã giảm giá {targetDiscount.discount}% cho sản phẩm này
             </h3>
             <div className="d-flex flex-direction-column m-t-8 m-b-16 p-tb-8 p-lr-16 discount">
               <span className="discount-price font-size-16px font-weight-700">
-                Giá: {helpers.formatProductPrice(price)}
+                Giá: {helpers.formatProductPrice(priceAfter)}
               </span>
               <span>
-                Đã giảm thêm: {helpers.formatProductPrice(priceBefore - price)}
+                Đã giảm thêm: {helpers.formatProductPrice(price - priceAfter)}
                 &nbsp;
                 <span className="discount-decr"></span>
               </span>
@@ -153,8 +128,11 @@ function ProductOverview(props) {
               <CheckOutlined className="discount-mark-icon" />
             </div>
           </>
-        )}
 
+        )}
+        <h3>
+          Còn lại: {quantity} sản phẩm
+        </h3>
         {/* Chọn số lượng */}
         <div className="p-t-12 option">
           {quantity === 0 ? (
@@ -186,15 +164,6 @@ function ProductOverview(props) {
               className="m-r-16 w-100 btn-group-item"
               style={{ backgroundColor: '#3555c5' }}>
               THÊM GIỎ HÀNG
-            </Button>
-
-            <Button
-              onClick={addCart}
-              disabled={stock ? false : true}
-              size="large"
-              className="w-100 btn-group-item"
-              style={{ backgroundColor: '#39B3D7' }}>
-              <Link to={constants.ROUTES.PAYMENT}> MUA NGAY LUÔN</Link>
             </Button>
           </div>
         ) : (

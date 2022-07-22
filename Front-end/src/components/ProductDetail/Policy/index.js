@@ -20,7 +20,7 @@ function ProductPolicy() {
       </div>
       <div className="m-b-12">
         <img src={truckIcon_2} className="m-r-4" />
-        Miễn phí giao hàng từ 700k
+        Miễn phí giao hàng
       </div>
       <div className="m-b-12">
         <img src={returnProductIcon} className="m-r-4" />

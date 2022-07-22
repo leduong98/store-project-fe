@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 function Evaluation(props) {
-  const { productId, rates } = props;
+  const { productId } = props;
   const [cmtList, setCmtList] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function Evaluation(props) {
 
   // rendering...
   return (
-    <EvaluationView productId={productId} rates={rates} cmtList={cmtList} />
+    <EvaluationView productId={productId}  cmtList={cmtList} />
   );
 }
 

@@ -20,15 +20,15 @@ import UserComment from './UserComment';
 const { TextArea } = Input;
 
 function EvaluationView(props) {
-  const { rates, cmtList, productId } = props;
+  const { cmtList, productId } = props;
   const [cmtListState, setCmtListState] = useState(cmtList);
   const { isAuth } = useSelector((state) => state.authenticate);
   const user = useSelector((state) => state.user);
 
   const [cmt, setCmt] = useState('');
   const star = useRef(0);
-  const starAvg = helpers.calStar(rates).toFixed(1);
-  const rateTotals = rates.reduce((a, b) => a + b, 0);
+  // const starAvg = helpers.calStar(rates).toFixed(1);
+  // const rateTotals = rates.reduce((a, b) => a + b, 0);
 
   // phân trang
   const [page, setPage] = useState(1);
@@ -78,46 +78,9 @@ function EvaluationView(props) {
       <Col span={24}>
         <h2 className="font-weight-700">Nhận xét của khách hàng</h2>
         <div className="underline-title"></div>
+        <br></br>
       </Col>
 
-      {/* đánh giá tổng quan */}
-      <Col span={24} className="p-16">
-        <span className="font-size-28px">Đánh giá</span>
-        <div className="overview d-flex p-tb-16">
-          {/* tổng kết */}
-          <div className="d-flex flex-direction-column align-i-center overview--total">
-            <h2 className="font-size-32px">{starAvg}</h2>
-            <Rate
-              disabled
-              defaultValue={starAvg}
-              allowHalf
-              style={{ fontSize: 12 }}
-            />
-            <p className="t-color-gray font-weight-500">
-              {rateTotals} nhận xét
-            </p>
-          </div>
-          {/* chi tiết */}
-          <div className="overview--detail d-flex flex-grow-1 flex-direction-column p-lr-16">
-            {rates.map((item, index) => (
-              <div key={index} className="d-flex justify-content-between">
-                <Rate
-                  disabled
-                  defaultValue={index + 1}
-                  style={{ fontSize: 14, flexBasis: 100 }}
-                />
-                <Progress
-                  percent={(item / rateTotals) * 100}
-                  type="line"
-                  showInfo={false}
-                  style={{ width: 172 }}
-                />
-                <span className="p-l-8 t-color-gray">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Col>
 
       {/* Xem bình luận, nhận xét */}
       <Col span={24}>
@@ -176,12 +139,6 @@ function EvaluationView(props) {
 
 EvaluationView.defaultProps = {
   rates: [0, 0, 0, 0, 0],
-};
-
-EvaluationView.propTypes = {
-  cmtList: PropTypes.array || PropTypes.object,
-  rates: PropTypes.array || PropTypes.object,
-  productId: PropTypes.string,
 };
 
 export default EvaluationView;

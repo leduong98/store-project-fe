@@ -29,9 +29,9 @@ function ProductDetail(props) {
         </Col>
 
         {/* Thông tin cơ bản của sản phẩm */}
-        {/*<Col span={24} md={18}>*/}
-        {/*  <ProductOverview products={products} />*/}
-        {/*</Col>*/}
+        <Col span={24} md={18}>
+          <ProductOverview products={products} />
+        </Col>
 
         {/* Chính sách */}
         <Col span={24} md={6}>
@@ -47,9 +47,9 @@ function ProductDetail(props) {
         </Col>
 
         {/* Nhận xét của khách hàng */}
-        {/*<Col span={24} id="evaluation">*/}
-        {/*  <Evaluation rates={rate} productId={id} />*/}
-        {/*</Col>*/}
+        <Col span={24} id="evaluation">
+          <Evaluation productId={id} />
+        </Col>
 
       {/*  /!* danh sách sản phẩm tương tự *!/*/}
       {/*  <Col span={24}>*/}
