@@ -168,12 +168,12 @@ function DiscountList(props) {
               <Controller
                 name="discount"
                 control={control}
-                rules={{ required: true, min: 10, max: 100 }}
+                rules={{ required: true, min: 5, max: 100 }}
                 render={({ field }) => <InputNumber style={{ width: '100%' }} {...field}
                 />}
               />
               {errors?.discount?.type === 'required' && <p><Text type='danger'>% giảm giá không được bỏ trống</Text></p>}
-              {errors?.discount?.type === 'min' && <p><Text type='danger'>% giảm giá lớn hơn hoặc bằng 1</Text></p>}
+              {errors?.discount?.type === 'min' && <p><Text type='danger'>% giảm giá lớn hơn hoặc bằng 5</Text></p>}
               {errors?.discount?.type === 'max' && <p><Text type='danger'>% giảm giá nhỏ hơn hoặc bằng 100</Text></p>}
             </Col>
             <Col span={12} style={{ display: 'flex', alignItems: 'end' }}>

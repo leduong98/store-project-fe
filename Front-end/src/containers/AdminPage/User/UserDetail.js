@@ -1,7 +1,6 @@
-import { Col, Modal, Row, Typography} from "antd";
-import {Controller, useForm } from "react-hook-form";
+import { Col, Modal, Row } from "antd";
+import { useForm } from "react-hook-form";
 import React, { useEffect } from 'react';
-const { Title, Text } = Typography;
 
 const UserDetail = (props) => {
     

@@ -1,7 +1,7 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Input, message, Popconfirm, Row, Spin, Table } from 'antd';
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Input, Row, Spin, Table } from 'antd';
 import adminApi from 'apis/adminApi';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TransactionStatusUser } from '../../../constants/extend_constant';
 import UserDetail from '../User/UserDetail';
 
@@ -116,7 +116,7 @@ function UserList() {
           <Input style={{width: '300px'}} value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Nhập tên, email hoặc số điện thoại"/>
           <br></br>
           <br></br>
-          <UserDetail value={item} visible={visible} onCancel={e => setVisible(false)}/>
+          <UserDetail value={item} visible={visible} onCancel={() => setVisible(false)}/>
           <Table
             columns={columns}
             dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.phone && ele.phone.includes(searchValue)) || (ele.full_name && ele.full_name.includes(searchValue)) || (ele.email && ele.email.includes(searchValue)))}
