@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react';
+import { Menu } from "antd";
 import { Link } from 'react-router-dom';
 import './index.scss'
 import productApi
@@ -39,15 +40,15 @@ function MenuFilter() {
   function renderFilterMenu(list) {
     return (
       list &&
-      list.map((item, index) => {
+      list.map((item) => {
         return (
-          <div
-            key={index}
-            className="w-100 p-lr-8 p-tb-4  Filter-menu-item">
-            <Link to={item.to} className="d-flex align-i-center">
-              <span className="title">{item.title}</span>
-            </Link>
-          </div>
+        <Menu>
+          <Menu.Item key="mail">
+              <Link to={item.to} className="d-flex align-i-center testssss">
+                  <span className="title">{item.title}</span>
+              </Link>
+          </Menu.Item>
+        </Menu>
         );
       })
     );
