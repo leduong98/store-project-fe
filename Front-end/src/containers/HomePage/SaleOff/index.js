@@ -2,10 +2,11 @@ import { Carousel } from 'antd';
 import React, {useEffect, useState } from 'react';
 import './index.scss';
 import adminApi from 'apis/adminApi';
-export const baseURL = "http://localhost:8080";
+import {baseURL} from "../../../apis/axiosClient";
+
 
 function SaleOff() {
-  
+
   const [data, setDataColumn] = useState([]);
 
   async function getSlideList() {

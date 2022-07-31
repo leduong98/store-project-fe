@@ -30,7 +30,6 @@ function ProductOverview(props) {
   const fullImage = [image, ...imageLists]
   const targetDiscount =  discounts ? discounts.find(ele => (new Date()).getTime() >= (new Date(ele.startDate)).getTime() && (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null;
 
-  console.log(targetDiscount.discount+"targetDiscount")
   // const rateTotal = rate.reduce((a, b) => a + b, 0);
   const priceAfter = price - (targetDiscount ? ((price * targetDiscount.discount) / 100) : 0);
   // const rateAvg = helpers.calStar(rate);
@@ -110,7 +109,7 @@ function ProductOverview(props) {
         <h1 className="product-price font-weight-700 p-tb-8">
           {price === 0 ? 'Liên hệ' : helpers.formatProductPrice(price)}
         </h1>
-        {targetDiscount.discount > 0 && price > 0 && (
+        { targetDiscount !== undefined && price > 0 && (
           <>
             <h3 className="font-weight-700" style={{ color: '#333' }}>
               Bạn có 1 mã giảm giá {targetDiscount.discount}% cho sản phẩm này

@@ -205,8 +205,8 @@ const ProductForm = (props) => {
                         render={({ field }) => <InputNumber style={{ width: '100%' }} {...field} />}
                     />
                     {errors?.quantity?.type === 'required' && <p><Text type='danger'>Số lượng không được bỏ trống</Text></p>}
-                    {errors?.quantity?.type === 'min' && <p><Text type='danger'>Vị trí phải lớn hơn hoặc bằng 1</Text></p>}
-                    {errors?.quantity?.type === 'max' && <p><Text type='danger'>Vị trí phải nhỏ hơn hoặc bằng 1000</Text></p>}
+                    {errors?.quantity?.type === 'min' && <p><Text type='danger'>Số lượng phải lớn hơn hoặc bằng 1</Text></p>}
+                    {errors?.quantity?.type === 'max' && <p><Text type='danger'>Số lượng phải nhỏ hơn hoặc bằng 1000</Text></p>}
                 </Col>
 
                 <Col span={24}>
