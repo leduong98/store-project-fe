@@ -32,6 +32,9 @@ axiosClient.interceptors.response.use(
     return res;
   },
   (error) => {
+    if (error.toString() !== "Error: Request failed with status code 500"){
+      message.error(error.message)
+    }
     throw error;
   },
 );

@@ -37,7 +37,6 @@ function HeaderView() {
   const { isAuth } = useSelector((state) => state.authenticate);
   const user = useSelector((state) => state.user);
   const carts = useSelector((state) => state.carts);
-  const options = helpers.autoSearchOptions();
   const locations = useLocation().pathname;
   const initLink = '/search?keyword=';
   const [linkSearch, setLinkSearch] = useState('');
@@ -161,7 +160,6 @@ function HeaderView() {
           <div className="search-bar pos-relative">
             <AutoComplete
               className="trans-center w-100"
-              options={options}
               onChange={(value) =>
                 setLinkSearch(helpers.formatQueryString(value))
               }
