@@ -1,9 +1,7 @@
 // Note: reducer xử lý việc xác thực người dùng
 
 import loginApi from 'apis/loginApi';
-import constants from 'constants/index';
 
-// ! import
 
 // ! constants
 const SET_IS_AUTH = 'SET_IS_AUTH';
@@ -21,10 +19,7 @@ const getIsAuth = () => {
       dispatch(setIsAuth(result.data.id !=null && result.data.id > 0));
     } catch (error) {
       if (error.response) {
-        //Unauthorized -> refresh token
-        if (error.response.status === 401) {
-          dispatch(refreshToken());
-        }
+        console.log("auth false")
       } else {
         dispatch(setIsAuth(false));
       }

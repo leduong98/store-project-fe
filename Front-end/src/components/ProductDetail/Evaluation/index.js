@@ -4,31 +4,28 @@ import {
   Input,
   message,
   Pagination,
-  Progress,
   Rate,
   Row,
 } from 'antd';
-import commentApi from 'apis/commentApi';
 import constants from 'constants/index';
-import helpers from 'helpers';
-import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './index.scss';
 import UserComment from './UserComment';
+import commentApi
+  from "../../../apis/commentApi";
 const { TextArea } = Input;
 
 function EvaluationView(props) {
   const { cmtList, productId } = props;
+  console.log(productId+"IDddddddd")
   const [cmtListState, setCmtListState] = useState(cmtList);
   const { isAuth } = useSelector((state) => state.authenticate);
   const user = useSelector((state) => state.user);
 
-  const [cmt, setCmt] = useState('');
+  const [cmt, setCmt] = useState(''); // set cmt from text box
   const star = useRef(0);
-  // const starAvg = helpers.calStar(rates).toFixed(1);
-  // const rateTotals = rates.reduce((a, b) => a + b, 0);
 
   // phân trang
   const [page, setPage] = useState(1);
@@ -47,18 +44,16 @@ function EvaluationView(props) {
   // event: comment
   const onComment = async () => {
     try {
-      const { avt, fullName } = user;
       const content = cmt.trim();
       if (content === '' && star.current === 0) {
         message.warning('Hãy nhập nhận xét của bạn');
         return;
       }
       let data = {
-        author: { name: fullName, avt },
-        productId,
-        time: new Date().getTime(),
-        content,
-        rate: star.current - 1,
+        product_id: productId,
+        content: content,
+        json_type: "rating",
+        number_star: star.current - 1,
       };
       const response = await commentApi.postComment(data);
       if (response) {

@@ -32,7 +32,6 @@ axiosClient.interceptors.response.use(
     return res;
   },
   (error) => {
-    message.error(error.message)
     throw error;
   },
 );

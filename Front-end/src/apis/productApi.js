@@ -11,26 +11,12 @@ const productApi = {
     return axiosClient.get(url);
   },
 
-  // api: lấy product list theo category
-  getProductByCat: (catId) => {
-    const param = {
-      catId: catId
-    }
-    const url= PRODUCT_API_URL + '/all'
-    return axiosClient.get(url, { params: { catId } })
-  },
-
   // api: Lấy 1 sản phẩm
   getProduct: (id) => {
     const url = PRODUCT_API_URL+"/"+id;
     return axiosClient.get(url);
   },
 
-  // api: Lấy danh sách sp, type = -1 : all, trừ sản phẩm có id
-  getProductList: (type = -1, brand = '', limit = 1, id) => {
-    const url = PRODUCT_API_URL + '/list/related';
-    return axiosClient.get(url, { params: { type, brand, limit, id } });
-  },
 
   // api: Lấy danh sách sản phẩm và phân trang
   getAllProducts: (page = 0, size = 8) => {

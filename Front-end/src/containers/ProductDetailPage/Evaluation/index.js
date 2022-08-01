@@ -1,7 +1,8 @@
 import commentApi from 'apis/commentApi';
-import EvaluationView from 'components/ProductDetail/Evaluation';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import EvaluationView
+  from "../../../components/ProductDetail/Evaluation";
 
 function Evaluation(props) {
   const { productId } = props;
@@ -29,9 +30,5 @@ function Evaluation(props) {
 }
 
 Evaluation.defaultProps = {};
-Evaluation.propTypes = {
-  productId: PropTypes.string,
-  rates: PropTypes.array || PropTypes.object,
-};
 
 export default Evaluation;

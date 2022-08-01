@@ -1,8 +1,9 @@
 import productApi from 'apis/productApi';
 import GlobalLoading from 'components/Loading/Global';
-import ProductDetail from 'components/ProductDetail';
 import React, { useEffect, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import ProductDetail
+  from "../../components/ProductDetail";
 
 function ProductDetailPage() {
   const { productId } = useParams();

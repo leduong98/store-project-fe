@@ -1,6 +1,4 @@
 import {
-  CompassOutlined,
-  NotificationOutlined,
   ReconciliationOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -13,7 +11,6 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 import './index.scss';
 import OrderList from './OrderList';
 import UpdateAccountForm from './UpdateForm';
-import AddressUserList from './UserAddressList';
 
 function AccountPage() {
   const { pathname } = useLocation();
@@ -34,16 +31,6 @@ function AccountPage() {
       title: 'Quản lý đơn hàng',
       key: 'orders',
     },
-    {
-      Icon: <CompassOutlined className="icon m-r-12 font-size-24px" />,
-      title: 'Địa chỉ giao hàng',
-      key: 'addresses',
-    },
-    {
-      Icon: <NotificationOutlined className="icon m-r-12 font-size-24px" />,
-      title: 'Thông báo',
-      key: 'notifications',
-    },
   ];
 
   // render component with key
@@ -61,24 +48,6 @@ function AccountPage() {
           <>
             <h2 className="m-b-16">Các đơn hàng của bạn</h2>
             <OrderList />
-          </>
-        );
-      case 'addresses':
-        return (
-          <>
-            <h2 className="m-b-16">Danh sách địa chỉ giao hàng của bạn</h2>
-            <AddressUserList />
-          </>
-        );
-      case 'notifications':
-        return (
-          <>
-            <h2 className="m-b-16">Thông báo</h2>
-            <Result
-              icon={<NotificationOutlined />}
-              title="Hiện tại, không có thông báo nào"
-            />
-            ,
           </>
         );
       default:

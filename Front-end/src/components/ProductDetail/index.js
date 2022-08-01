@@ -1,8 +1,5 @@
 import { HomeOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
-import Evaluation from 'containers/ProductDetailPage/Evaluation';
-import RelatedProduct from 'containers/ProductDetailPage/RelatedProduct';
-import helpers from 'helpers';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -10,6 +7,8 @@ import Description from './Description';
 import './index.scss';
 import ProductOverview from './Overview';
 import ProductPolicy from './Policy';
+import Evaluation
+  from "../../containers/ProductDetailPage/Evaluation";
 
 function ProductDetail(props) {
   const products = props;

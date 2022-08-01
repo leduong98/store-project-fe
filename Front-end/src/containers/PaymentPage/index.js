@@ -14,7 +14,6 @@ import addressApi from 'apis/addressApi';
 import orderApi from 'apis/orderApi';
 import CartPayment from 'components/Cart/Payment';
 import constants from 'constants/index';
-import AddressUserList from 'containers/AccountPage/UserAddressList';
 import helpers from 'helpers';
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -186,10 +185,6 @@ function PaymentPage() {
                       </Radio>
                     ))}
                   </Radio.Group>
-                  <AddressUserList
-                    isCheckout={true}
-                    onChecked={(value) => (addressIndex.current = value)}
-                  />
                 </div>
 
                 {/* ghi chú */}

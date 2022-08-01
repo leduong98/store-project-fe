@@ -15,7 +15,7 @@ const getUserRequest = () => {
       const user  = response.data;
       dispatch(getUser(user));
     } catch (error) {
-      throw error;
+      console.log("false")
     }
   };
 };

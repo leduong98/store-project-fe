@@ -1,5 +1,4 @@
 import { BackTop, Col, Row } from 'antd';
-import RelatedProduct from 'containers/ProductDetailPage/RelatedProduct';
 import React from 'react';
 import AllProduct from './AllProduct';
 import FamousBrand from './FamousBrand';
@@ -33,10 +32,6 @@ function HomePage() {
           <FamousBrand />
         </Col>
 
-        {/* Sản phẩm bán chạy */}
-        <Col span={24} className="m-b-32 hot-products box-sha-home bor-rad-8">
-          <RelatedProduct title="Sản phẩm bán chạy" type={0} />
-        </Col>
 
         {/* Tổng hợp sản phẩm */}
         <Col span={24} className="m-b-32 bg-white box-sha-home bor-rad-8">

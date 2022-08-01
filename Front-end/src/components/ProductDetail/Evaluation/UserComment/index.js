@@ -7,8 +7,8 @@ import { Redirect } from 'react-router-dom';
 
 function UserComment(props) {
   const { comment } = props;
-  const { author, time, rate, content, nLike, replies } = comment;
-  const { name, avt } = author;
+  console.log(JSON.stringify(comment)+"comment")
+  const {time , name , number_star, content} = comment;
   const isReduceCmt = content.length >= 200 ? true : false;
   const [isMore, setIsMore] = useState(false);
   const [loginRedirect, setLoginRedirect] = useState(false);
@@ -23,20 +23,20 @@ function UserComment(props) {
         author={<b className="font-size-14px">{name}</b>}
         avatar={
           <Avatar
-            src={avt !== '' ? avt : constants.DEFAULT_USER_AVT}
+            src={ constants.DEFAULT_USER_AVT}
             alt={name}
           />
         }
         content={
           <>
-            {rate !== -1 && (
+            {number_star !== -1 && (
               <>
                 <Rate
-                  defaultValue={rate + 1}
+                  defaultValue={number_star + 1}
                   disabled
                   style={{ fontSize: 14 }}
                 />
-                <h3>{helpers.convertRateToText(rate)}</h3>
+                <h3>{helpers.convertRateToText(number_star)}</h3>
               </>
             )}
 
