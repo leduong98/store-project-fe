@@ -16,14 +16,10 @@ function ResultSearch(props) {
   const { initList } = props;
   const [list, setList] = useState([...initList]);
   const [isLoading, setIsLoading] = useState(false);
-  const [price, setPrice] = useState({ from: 0, to: 0 });
   const [sortBtnActive, setSortBtnActive] = useState(0);
   const sortButtons = [
     { key: 1, title: 'Giá giảm dần' },
     { key: 2, title: 'Giá tăng dần' },
-    { key: 3, title: 'Bán chạy nhất' },
-    { key: 4, title: 'Đánh giá tốt nhất' },
-    { key: 5, title: 'Khuyến mãi tốt nhất' },
   ];
 
   // event: sắp xếp danh sách theo các tiêu chí, type = 0 -> break
@@ -50,20 +46,6 @@ function ResultSearch(props) {
         case 2:
           newList = list.sort((a, b) => a.price - b.price);
           break;
-        // bán chạy nhất
-        case 3:
-          newList = list.sort((a, b) => sumRate(b.rate) - sumRate(a.rate));
-          break;
-        // đánh giá tốt nhất
-        case 4:
-          newList = list.sort(
-            (a, b) => helpers.calStar(b.rate) - helpers.calStar(a.rate),
-          );
-          break;
-        // Khuyến mãi tốt nhất
-        case 5:
-          newList = list.sort((a, b) => b.discount - a.discount);
-          break;
         default:
           setIsLoading(false);
           break;
@@ -77,19 +59,6 @@ function ResultSearch(props) {
     }
   };
 
-  // event: Lọc theo giá
-  const onFilterByPrice = () => {
-    setIsLoading(true);
-    const { from, to } = price;
-    let newList = initList.filter(
-      (item) => item.price >= from && item.price <= to,
-    );
-    // delay
-    setTimeout(() => {
-      setIsLoading(false);
-      setList(newList);
-    }, 200);
-  };
 
   // fn: Hiển thị sản phẩm
   const showProducts = (list) => {
@@ -131,39 +100,6 @@ function ResultSearch(props) {
               {item.title}
             </Button>
           ))}
-          {/* search range price */}
-          <div className="m-l-8">
-            <InputNumber
-              className="bor-rad-4"
-              size="large"
-              min={0}
-              max={1000000000}
-              style={{ width: 120 }}
-              placeholder="Giá thấp nhất"
-              step={10000}
-              onChange={(value) => setPrice({ ...price, from: value })}
-            />
-            {` - `}
-            <InputNumber
-              className="bor-rad-4"
-              size="large"
-              min={price.from}
-              max={1000000000}
-              style={{ width: 120 }}
-              placeholder="Giá cao nhất"
-              step={10000}
-              onChange={(value) => setPrice({ ...price, to: value })}
-            />
-            {price.to > 0 && (
-              <Button
-                type="primary"
-                size="large"
-                className="m-l-8 price-search-btn bor-rad-4"
-                onClick={onFilterByPrice}>
-                Lọc
-              </Button>
-            )}
-          </div>
         </div>
       </Col>
 

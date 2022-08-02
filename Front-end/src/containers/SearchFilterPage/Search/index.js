@@ -4,7 +4,6 @@ import ResultSearch from 'components/ResultSearch';
 import helpers from 'helpers';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductCarousel from '../ProductCarousel';
 
 function SearchResult() {
   // get query param
@@ -19,7 +18,7 @@ function SearchResult() {
 
   // state pagination
   const [list, setList] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,9 +31,9 @@ function SearchResult() {
         12,
       );
       if (result && isSubscribe) {
-        const { list, count } = result.data;
-        setList(list);
-        setTotal(count);
+        const { data, metadata } = result.data;
+        setList(data);
+        setTotal(metadata.total);
         setIsLoading(false);
       }
     } catch (error) {
@@ -48,8 +47,8 @@ function SearchResult() {
   useEffect(() => {
     let isSubscribe = true;
     setIsLoading(true);
-    if (page !== 1) setPage(1);
-    getSearchProducts(1, isSubscribe);
+    if (page !== 0) setPage(0);
+    getSearchProducts(0, isSubscribe);
 
     // clean up
     return () => {
@@ -71,8 +70,6 @@ function SearchResult() {
   // rendering...
   return (
     <div className="container" style={{ minHeight: '100vh' }}>
-      {/* Carousel */}
-      <ProductCarousel />
 
       {/* Số  kết quả tìm kiếm */}
       {!isLoading && (

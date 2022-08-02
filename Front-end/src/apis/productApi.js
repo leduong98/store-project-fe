@@ -25,32 +25,11 @@ const productApi = {
   },
 
   // api: tìm kiếm sản phẩm
-  getSearchProducts: (value = '', page = 1, perPage = 8) => {
-    const url = PRODUCT_API_URL + '/search';
-    return axiosClient.get(url, { params: { value, page, perPage } });
+  getSearchProducts: (value = '', page = 0, size = 8) => {
+    const url = PRODUCT_API_URL + '/filter';
+    return axiosClient.get(url, { params: { productName:value, page: page , size} });
   },
 
-  // api: lọc sản phẩm
-  getFilterProducts: (
-    type = 0,
-    pOption = {},
-    dOption = {},
-    page = 0,
-    perPage = 8,
-  ) => {
-    const url = PRODUCT_API_URL + '/filter';
-    RegExp.prototype.toJSON = RegExp.prototype.toString;
-    const params = {
-      type,
-      pOption: JSON.stringify(pOption),
-      dOption: JSON.stringify(dOption),
-      page,
-      perPage,
-    };
-    return axiosClient.get(url, {
-      params,
-    });
-  },
 };
 
 export default productApi;
