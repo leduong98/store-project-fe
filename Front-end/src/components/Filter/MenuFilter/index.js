@@ -23,7 +23,7 @@ function MenuFilter() {
           const res  = response.data;
           const menuList = []
           for (const d of res.data) {
-            const a = {to: "/filter?catId="+d.id,
+            const a = {to: "/filter?catId="+d.name,
               title: d.name}
             menuList.push(a)
           }

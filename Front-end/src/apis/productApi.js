@@ -25,9 +25,16 @@ const productApi = {
   },
 
   // api: tìm kiếm sản phẩm
-  getSearchProducts: (value = '', page = 0, size = 8) => {
+  getSearchProducts: (product , page = 0, size = 8, category) => {
     const url = PRODUCT_API_URL + '/filter';
-    return axiosClient.get(url, { params: { productName:value, page: page , size} });
+    let params;
+    if (product){
+      params= {
+        productName: product, page: page , size
+      }
+    }else {
+    params = { page: page , size, categoryName: category }}
+    return axiosClient.get(url, { params: params });
   },
 
 };

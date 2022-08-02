@@ -9,9 +9,9 @@ import './index.scss';
 import {baseURL} from "../../apis/axiosClient";
 
 // fn: hàm tính tổng lượt đánh giá sản phẩm
-function sumRate(rates = []) {
-  return rates.reduce((a, b) => a + b, 0);
-}
+// function sumRate(rates = []) {
+//   return rates.reduce((a, b) => a + b, 0);
+// }
 
 function ResultSearch(props) {
   const { initList } = props;
@@ -65,7 +65,6 @@ function ResultSearch(props) {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      console.log("loggggggggggggg "+ JSON.stringify(product))
       const { image, name, price, discounts, quantity, id } = product;
       return (
         <Col key={index} span={24} sm={12} lg={8} xl={6} xxl={4}>

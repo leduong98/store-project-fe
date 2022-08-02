@@ -9,7 +9,6 @@ function SearchResult() {
   // get query param
   const search = useLocation().search;
   const query = helpers.queryString(search);
-
   // keyword search
   let keyword = query.find((item) => item.hasOwnProperty('keyword'));
   let keywordValue = '';
@@ -98,7 +97,7 @@ function SearchResult() {
               current={page}
               showSizeChanger={false}
               pageSize={12}
-              onChange={(p) => setPage(p)}
+              onChange={(p) => setPage(p-1)}
             />
           )}
         </>
