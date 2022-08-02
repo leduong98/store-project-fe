@@ -18,7 +18,6 @@ function CartItem(props) {
     onDelCartItem,
     onUpdateNumOfProd,
   } = props;
-  console.log(JSON.stringify(discounts)+"dícoutttttttttttttttttt")
   return (
     <div className="d-flex bg-white p-12 bor-rad-4 justify-content-between">
       {/* sản phẩm */}
