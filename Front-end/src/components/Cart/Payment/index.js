@@ -6,15 +6,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function CartPayment(props) {
-  const { carts, isCheckout, transportFee, onCheckout, isLoading } = props;
+  const { carts, transportFee } = props;
   // giá tạm tính
   const tempPrice = carts.reduce(
-    (a, b) => a + (b.price + (b.price * b.discount) / 100) * b.amount,
+    (a, b) => a + (b.price + (b.price * (b.discounts.length > 0 ? b.discounts[0].discount : 0)) / 100) * b.amount,
     0,
   );
   // tổng khuyến mãi
   const totalDiscount = carts.reduce(
-    (a, b) => a + ((b.price * b.discount) / 100) * b.amount,
+    (a, b) => a + ((b.price * (b.discounts.length > 0 ? b.discounts[0].discount : 0)) / 100) * b.amount,
     0,
   );
 
@@ -53,17 +53,6 @@ function CartPayment(props) {
           style={{ color: '#aaa', fontSize: 16 }}>{`(Đã bao gồm VAT)`}</span>
       </div>
 
-      {isCheckout ? (
-        <Button
-          onClick={onCheckout}
-          className="m-t-16 d-block m-lr-auto w-100"
-          type="primary"
-          size="large"
-          loading={isLoading}
-          style={{ backgroundColor: '#3555c5', color: '#fff' }}>
-          ĐẶT HÀNG NGAY
-        </Button>
-      ) : (
         <Link to={constants.ROUTES.PAYMENT}>
           <Button
             className="m-t-16 d-block m-lr-auto w-100"
@@ -73,7 +62,6 @@ function CartPayment(props) {
             THANH TOÁN
           </Button>
         </Link>
-      )}
     </div>
   );
 }
