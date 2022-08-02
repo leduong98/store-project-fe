@@ -52,7 +52,7 @@ const cartReducer = (state = initialState, action) => {
       // Kiểm tra trong giỏ hàng đã có item đó hay chưa
       let isExist = false;
       for (let i = 0; i < newCart.length; ++i) {
-        if (newCart[i].code === item.code) {
+        if (newCart[i].id === item.id) {
           newCart[i].amount += item.amount;
           isExist = true;
           break;

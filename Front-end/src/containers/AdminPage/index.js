@@ -1,17 +1,10 @@
 import {
-  BarChartOutlined,
   ContactsOutlined,
   DashboardOutlined,
-  EyeOutlined,
   HomeOutlined,
-  IdcardOutlined,
   MenuOutlined,
-  NotificationOutlined,
-  PlusCircleOutlined,
-  ReconciliationOutlined,
   ShoppingCartOutlined,
   TransactionOutlined,
-  UserOutlined,
   SlidersOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
@@ -24,8 +17,6 @@ import Dashboard from './Dashboard';
 import './index.scss';
 import Login from './Login';
 const TransactionList = React.lazy(() => import('./TransactionList'));
-const AdminUser = React.lazy(() => import('./AdminUser'));
-const CustomerList = React.lazy(() => import('./CustomersList'));
 const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
 const SlideList = React.lazy(() => import('./SlideList'));
@@ -137,31 +128,6 @@ function AdminPage(props) {
       );
     });
   };
-
-  // fn: render component tương ứng
-  const renderMenuComponent = (key) => {
-
-   // return ();
-
-    // switch (key) {
-    //   case 'd':
-    //     return <Dashboard />;
-    //   case 'category':
-    //     return <CategoryList/>;
-    //   case 'p0':
-    //     return <SeeProduct />;
-    //   case 'p1':
-    //     return <AddProduct />;
-    //   case 'a':
-    //     return <AdminUser />;
-    //   case 'c':
-    //     return <CustomerList />;
-    //   case 'o':
-    //     return <OrderList />;
-    //   default:
-    //     break;
-    // }
-  }
 
   // event: Login với quyền admin (props > Login)
   const onLogin = (isLogin, name) => {

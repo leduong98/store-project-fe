@@ -57,14 +57,13 @@ function ProductOverview(props) {
   // fn: Thêm vào giỏ hàng
   const addCart = () => {
     let product = {
-      // code,
-      // name,
-      // price,
-      // amount: numOfProduct,
-      // avt,
-      // discount,
-      // stock,
-      // _id,
+      name,
+      price,
+      amount: numOfProduct,
+      image,
+      discounts,
+      quantity,
+      id
     };
     setNumberOfProduct(1);
     dispatch(cartActions.addToCart(product));
