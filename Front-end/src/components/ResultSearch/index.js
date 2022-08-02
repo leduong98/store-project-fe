@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './index.scss';
+import {baseURL} from "../../apis/axiosClient";
 
 // fn: hàm tính tổng lượt đánh giá sản phẩm
 function sumRate(rates = []) {
@@ -64,16 +65,17 @@ function ResultSearch(props) {
   const showProducts = (list) => {
     list = list ? list : [];
     return list.map((product, index) => {
-      const { avt, name, price, discount, stock, _id } = product;
+      console.log("loggggggggggggg "+ JSON.stringify(product))
+      const { image, name, price, discounts, quantity, id } = product;
       return (
         <Col key={index} span={24} sm={12} lg={8} xl={6} xxl={4}>
-          <Link to={`/product/${_id}`}>
+          <Link to={`/product/${id}`}>
             <ProductView
               name={name}
               price={price}
-              stock={stock}
-              avtUrl={avt}
-              discount={discount}
+              stock={quantity}
+              avtUrl={baseURL+image}
+              discount={discounts}
               height={400}
             />
           </Link>

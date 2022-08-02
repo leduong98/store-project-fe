@@ -44,7 +44,7 @@ function MenuFilter() {
         return (
         <Menu>
           <Menu.Item key="mail">
-              <Link to={item.to} className="d-flex align-i-center testssss">
+              <Link to={item.to} className="d-flex align-i-center">
                   <span className="title">{item.title}</span>
               </Link>
           </Menu.Item>

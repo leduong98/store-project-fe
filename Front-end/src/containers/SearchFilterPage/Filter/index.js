@@ -5,7 +5,6 @@ import constants from 'constants/index';
 import helpers from 'helpers';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductCarousel from '../ProductCarousel';
 import './index.scss';
 
 // fn: thêm option vào url
