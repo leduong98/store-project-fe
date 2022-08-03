@@ -17,7 +17,6 @@ function Cart() {
     dispatch(cartReducer.resetCart());
   };
 
-  console.log(JSON.stringify(carts)+"------------------------------")
   // rendering ...
   return (
     <div

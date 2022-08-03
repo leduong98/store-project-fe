@@ -3,7 +3,9 @@ import constants from 'constants/index';
 import helpers from 'helpers';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import axiosClient
+  from "../../../apis/axiosClient";
+
 
 function CartPayment(props) {
   const { carts, transportFee } = props;
@@ -17,6 +19,16 @@ function CartPayment(props) {
     (a, b) => a + ((b.price * (b.discounts.length > 0 ? b.discounts[0].discount : 0)) / 100) * b.amount,
     0,
   );
+
+  // giá thật
+  const price = tempPrice - totalDiscount + transportFee
+  const pricePaypal = (price/23000).toFixed(2)
+
+  const handlePayment = async () => {
+    const data = await axiosClient.post("/payment/checkout?sum=" + pricePaypal);
+    console.log(data);
+    window.location.href = data.data.redirect_url;
+  }
 
   // rendering ...
   return (
@@ -45,23 +57,24 @@ function CartPayment(props) {
           Thành tiền
         </span>
         <b style={{ color: 'red', fontSize: 20 }}>
-          {helpers.formatProductPrice(tempPrice - totalDiscount + transportFee)}
+          {helpers.formatProductPrice(price)}
         </b>
       </div>
       <div className="t-end">
         <span
-          style={{ color: '#aaa', fontSize: 16 }}>{`(Đã bao gồm VAT)`}</span>
+          style={{ color: '#aaa', fontSize: 16 }}>~ {pricePaypal} USD</span>
       </div>
 
-        <Link to={constants.ROUTES.PAYMENT}>
+        {/*<Link to={constants.ROUTES.PAYMENT}>*/}
           <Button
+            onClick={() => handlePayment()}
             className="m-t-16 d-block m-lr-auto w-100"
             type="primary"
             size="large"
             style={{ backgroundColor: '#3555c5', color: '#fff' }}>
             THANH TOÁN
           </Button>
-        </Link>
+        {/*</Link>*/}
     </div>
   );
 }

@@ -43,6 +43,7 @@ const ROUTES = {
   FILTER: '/filter',
   ACCOUNT: '/account',
   PAYMENT: '/payment',
+  PAYMENTSC: '/payment/success'
 };
 
 // FILTERS
