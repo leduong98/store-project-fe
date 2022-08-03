@@ -22,10 +22,15 @@ import logoUrl from 'assets/imgs/logo.png';
 import constants from 'constants/index';
 import helpers from 'helpers';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import CartView from './CartView';
 import './index.scss';
+import cartReducer
+  from "../../reducers/carts";
 
 function totalItemCarts(carts) {
   if (carts) {
@@ -34,6 +39,7 @@ function totalItemCarts(carts) {
 }
 
 function HeaderView() {
+  const dispatch = useDispatch();
   const { isAuth } = useSelector((state) => state.authenticate);
   const user = useSelector((state) => state.user);
   const carts = useSelector((state) => state.carts);
@@ -56,6 +62,7 @@ function HeaderView() {
         message.success('Đăng xuất thành công', 2);
         localStorage.removeItem(constants.ACCESS_TOKEN_KEY);
         localStorage.removeItem("isAuth")
+        dispatch(cartReducer.resetCart());
         location.reload();
     } catch (error) {
       message.error('Đăng xuất thất bại', 2);
