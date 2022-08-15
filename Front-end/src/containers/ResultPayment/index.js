@@ -33,7 +33,7 @@ function PaymentSuccess (props){
           orders: carts.map(ele => ({
             quantity: ele.amount,
             product_id: ele.id,
-            discount_id: ele.discounts[0].id
+            discount_id:  ele.discounts && ele.discounts.length > 0 ? ele.discounts[0].id : null
           }))
         }
         axiosClient.post('/order', data).then(res => {
