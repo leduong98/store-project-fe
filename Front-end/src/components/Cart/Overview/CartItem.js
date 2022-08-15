@@ -40,10 +40,10 @@ function CartItem(props) {
           className="d-flex flex-direction-column align-i-end"
           style={{ flexBasis: 200 }}>
           <b className="font-size-18px" style={{ color: '#3555C5' }}>
-            {helpers.formatProductPrice(price)}
+            {helpers.formatProductPrice(price -((price * (discounts.length != 0 ? discounts[0].discount : 0)) / 100))}
           </b>
           <span style={{ textDecoration: 'line-through', color: '#aaa' }}>
-                {helpers.formatProductPrice(price + (price * (discounts.length != 0 ? discounts[0].discount : 0)) / 100)}
+                {helpers.formatProductPrice(price)}
               </span>
         </div>
         <div className="d-flex align-i-center" style={{ flexBasis: 128 , marginLeft : 25}}>

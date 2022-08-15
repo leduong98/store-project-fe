@@ -20,7 +20,6 @@ const FilterResult = React.lazy(() =>
   import('containers/SearchFilterPage/Filter'),
 );
 const AccountPage = React.lazy(() => import('containers/AccountPage'));
-const PaymentPage = React.lazy(() => import('containers/PaymentPage'));
 const PaymentSuccess = React.lazy(() => import('containers/ResultPayment'))
 
 const routes = [
@@ -77,11 +76,7 @@ const routes = [
     exact: false,
     main: () => <AccountPage />,
   },
-  {
-    path: constants.ROUTES.PAYMENT,
-    exact: true,
-    main: () => <PaymentPage />,
-  }, {
+ {
     path: constants.ROUTES.PAYMENTSC,
     exact: true,
     main: () => <PaymentSuccess />,

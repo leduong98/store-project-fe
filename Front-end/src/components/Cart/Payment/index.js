@@ -11,7 +11,7 @@ function CartPayment(props) {
   const { carts, transportFee } = props;
   // giá tạm tính
   const tempPrice = carts.reduce(
-    (a, b) => a + (b.price + (b.price * (b.discounts.length > 0 ? b.discounts[0].discount : 0)) / 100) * b.amount,
+    (a, b) => a + ((b.price) * b.amount),
     0,
   );
   // tổng khuyến mãi
