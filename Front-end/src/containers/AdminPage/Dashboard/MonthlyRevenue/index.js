@@ -17,7 +17,7 @@ function generateLabels() {
 function MonthlyRevenue() {
   // năm hiện tại
   const year = new Date().getFullYear();
-  const [data, setData] = useState({ thisYear: [], lastYear: [] });
+  const [data, setData] = useState({ thisYear: []});
   const [isLoading, setIsLoading] = useState(true);
 
   // Lây doanh thu
@@ -28,12 +28,13 @@ function MonthlyRevenue() {
         setIsLoading(true);
         const response = await statisticApi.getStaMonthlyRevenue(year);
         if (isSubScribe && response) {
-          const { thisYear, lastYear } = response.data;
-          setData({ thisYear, lastYear });
+          const { data } = response.data ;
+          const thisYear = data.map(ele => ele.amount);
+          setData({ thisYear });
           setIsLoading(false);
         }
       } catch (error) {
-        setData({ thisYear: [], lastYear: [] });
+        setData({ thisYear: [] });
         if (isSubScribe) setIsLoading(false);
       }
     }
@@ -58,11 +59,6 @@ function MonthlyRevenue() {
             labels: generateLabels(),
             datasets: [
               {
-                backgroundColor: '#2EA62A',
-                data: [...data.lastYear],
-                label: `Năm ${year - 1}`,
-              },
-              {
                 backgroundColor: '#4670FF',
                 data: [...data.thisYear],
                 label: `Năm ${year}`,
@@ -73,7 +69,7 @@ function MonthlyRevenue() {
             legend: { display: true },
             title: {
               display: true,
-              text: `Doanh thu theo từng tháng của năm ${year - 1}, ${year}`,
+              text: `Doanh thu theo từng tháng của năm ${year}`,
               fontSize: 18,
             },
             scales: {

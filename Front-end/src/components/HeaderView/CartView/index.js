@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.scss';
+import {baseURL} from "../../../apis/axiosClient";
 
 const { Meta } = Card;
 
@@ -34,7 +35,7 @@ function CartView(props) {
                   <Avatar
                     shape="square"
                     style={{ width: 80, height: 50 }}
-                    src={item.avt}
+                    src={baseURL+item.image}
                   />
                 }
                 title={item.name}

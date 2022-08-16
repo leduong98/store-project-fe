@@ -1,7 +1,7 @@
 import { Button, Col, Input, InputNumber, Modal, Row, Table, Typography } from "antd";
 import React, { useEffect, useState } from 'react';
 import adminApi from "../../../apis/adminApi";
-import { getMapStatus, TransactionStatus } from "../../../constants/extend_constant";
+import { TransactionStatus } from "../../../constants/extend_constant";
 const { Text } = Typography;
 
 const columns = [
@@ -40,7 +40,6 @@ const columns = [
 const ViewTranssaction = (props) => {
 
     const [item, setItem] = useState({})
-    const mapStatus = getMapStatus()
 
     useEffect(() => {
         async function fetchMyAPI() {
@@ -50,36 +49,17 @@ const ViewTranssaction = (props) => {
                 setItem(respone.data)
             }
           }
-      
+
           fetchMyAPI()
-        
+
 
     }, [props.value])
-    const changeStatus = async status => {
-        const data = { status, 'json_type': 'transactionStatus' }
-
-        await adminApi.updateStatusTransaction(item.id, data)
-
-        const respone = await adminApi.getTransactionById(item.id);
-        setItem(respone.data)
-        props.getList()
-    }
 
     return (
         <Modal title={"Chi tiết giao dịch"}
             visible={props.visible} onOk={props.cancel}
             cancelButtonProps={{ style: { display: 'none' } }} closable={false}
             footer={[
-                mapStatus.get(item?.status) &&
-                <Button key={"one_button"} style={{ backgroundColor: 'green', color: 'white' }} onClick={() => changeStatus(mapStatus.get(item?.status))}>
-                    {mapStatus.get(item?.status) ? TransactionStatus[mapStatus.get(item?.status)] : ''}
-                </Button>,
-                item?.status !== 'SUCCESSFUL_TRANSPORT' &&
-                item?.status !== 'RECEIVED' &&
-                item?.status !== 'CANCEL' &&
-                <Button key={"two_button"} style={{ backgroundColor: 'red', color: 'white' }} onClick={() => changeStatus('CANCEL')}>
-                    Hủy giao dịch
-                </Button>,
                 <Button key={"three_button"} type="primary" onClick={props.cancel}>Ok</Button>]}
             width={1000}
         >

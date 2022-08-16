@@ -58,34 +58,10 @@ function TransactionList() {
       dataIndex: 'status',
       filters: [
         {
-          text: TransactionStatus['WAIT_FOR_APPROVE'],
-          value: 'WAIT_FOR_APPROVE',
-        },
-        {
-          text: TransactionStatus['APPROVED'],
-          value: 'APPROVED',
-        },
-        {
-          text: TransactionStatus['TRANSPORT'],
-          value: 'TRANSPORT',
-        },
-        {
-          text: TransactionStatus['SUCCESSFUL_TRANSPORT'],
-          value: 'SUCCESSFUL_TRANSPORT',
-        },
-        {
-          text: TransactionStatus['RECEIVED'],
-          value: 'RECEIVED',
-        },
-        {
-          text: TransactionStatus['CANCEL'],
-          value: 'CANCEL',
+          text: TransactionStatus['SUCCESSFUL'],
+          value: 'SUCCESSFUL',
         }
       ],
-      defaultFilteredValue : ['WAIT_FOR_APPROVE', 'APPROVED'], 
-        onFilter: (value, record) => {
-          return record.status && record.status.indexOf(value) === 0
-        },
       render: (v, record) => TransactionStatus[record.status],
       width: '10%'
     },
@@ -96,22 +72,9 @@ function TransactionList() {
         <Row style={{display: 'flex', justifyContent: 'center'}}>
           <Button type='primary' icon={<EyeOutlined />} onClick={() => onClickOpenModal("view", records)}> Xem chi tiết</Button>
         </Row>
-  
       ),
     },
   ];
-
-  const onDelCategory = async (id) => {
-    try {
-      const response = await adminApi.deleteCategory(id);
-      if (response && response.status === 200) {
-        message.success('Xoá categoty thành công');
-        getCategoryList()
-      }
-    } catch (error) {
-      message.error('Xoá categoty thất bại');
-    }
-  };
 
   async function getCategoryList() {
     try {
@@ -132,7 +95,6 @@ function TransactionList() {
   }, []);
 
   const onClickOpenModal = (action, item = null) => {
-    console.log(item)
     setAction(action);
     setItem(item?.id);
     setVisible(true);
