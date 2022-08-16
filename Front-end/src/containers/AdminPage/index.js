@@ -7,7 +7,11 @@ import {
   TransactionOutlined,
   SlidersOutlined,
 } from '@ant-design/icons';
-import { Button, Menu } from 'antd';
+import {
+  Button,
+  Menu,
+  message
+} from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import defaultAvt from 'assets/imgs/default-avt.png';
@@ -15,14 +19,25 @@ import logoUrl from 'assets/imgs/logo.png';
 import React, { useEffect, useState } from 'react';
 import Dashboard from './Dashboard';
 import './index.scss';
-import Login from './Login';
 const TransactionList = React.lazy(() => import('./TransactionList'));
 const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
 const SlideList = React.lazy(() => import('./SlideList'));
 const UserList = React.lazy(() => import('./User'));
-import { Route, Switch, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory
+} from 'react-router-dom';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
+import constants
+  from "../../constants";
+import cartReducer
+  from "../../reducers/carts";
 
 const mainColor = '#141428';
 const menuList = [
@@ -69,14 +84,7 @@ function AdminPage(props) {
   const match = props.match;
   const user = useSelector((state) => state.user);
   const [keyMenu, setKeyMenu] = useState('d');
-  const [isLogin, setIsLogin] = useState(() => {
-    const isLogin = localStorage.getItem('admin');
-    return isLogin ? true : false;
-  });
-  const [adminName, setAdminName] = useState(() => {
-    const admin = localStorage.getItem('admin');
-    return admin ? admin : 'Admin';
-  });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const url = window.location.href.split('/');
@@ -129,31 +137,21 @@ function AdminPage(props) {
     });
   };
 
-  // event: Login với quyền admin (props > Login)
-  const onLogin = (isLogin, name) => {
-    if (isLogin) {
-      setIsLogin(true);
-      setAdminName(name);
-      localStorage.setItem('admin', name);
+  // event: log out
+  const onLogout = async () => {
+    try {
+      message.success('Đăng xuất thành công', 2);
+      localStorage.removeItem(constants.ACCESS_TOKEN_KEY);
+      localStorage.removeItem("isAuth")
+      dispatch(cartReducer.resetCart());
+    } catch (error) {
+      message.error('Đăng xuất thất bại', 2);
     }
   };
 
-  // event: logout
-  const onLogout = () => {
-    setIsLogin(false);
-    localStorage.removeItem('admin');
-  };
-
-  console.log(match.path)
 
   return (
     <div className="Admin-Page" style={{ backgroundColor: '#e5e5e5' }}>
-      {!isLogin ? (
-        <div className="trans-center bg-white p-32 bor-rad-8 box-sha-home">
-          <h2 className="m-b-16 t-center">Đăng nhập với quyền Admin</h2>
-          <Login onLogin={onLogin} />
-        </div>
-      ) : (
         <>
           {/* header */}
           <div
@@ -182,9 +180,11 @@ function AdminPage(props) {
                 <Avatar size={36} className="m-r-10" src={defaultAvt} />
                 <span className="user-admin-title">{user?.full_name}</span>
               </div>
-              <Button onClick={onLogout} className="m-r-44" type="dashed">
-                Đăng xuất
-              </Button>
+              <Link to='/login'>
+                <Button onClick={onLogout} className="m-r-44" type="dashed">
+                  Đăng xuất
+                </Button>
+              </Link>
             </div>
           </div>
           {/* main content */}
@@ -221,7 +221,6 @@ function AdminPage(props) {
             </div>
           </div>
         </>
-      )}
     </div>
   );
 }
