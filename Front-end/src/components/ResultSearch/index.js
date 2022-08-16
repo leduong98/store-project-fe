@@ -8,11 +8,6 @@ import { Link } from 'react-router-dom';
 import './index.scss';
 import {baseURL} from "../../apis/axiosClient";
 
-// fn: hàm tính tổng lượt đánh giá sản phẩm
-// function sumRate(rates = []) {
-//   return rates.reduce((a, b) => a + b, 0);
-// }
-
 function ResultSearch(props) {
   const { initList } = props;
   const [list, setList] = useState([...initList]);
@@ -132,10 +127,6 @@ function ResultSearch(props) {
 
 ResultSearch.defaultProps = {
   initList: [],
-};
-
-ResultSearch.propTypes = {
-  initList: PropTypes.array,
 };
 
 export default ResultSearch;

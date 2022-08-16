@@ -16,16 +16,7 @@ function FilterResult() {
   let keywordValue = '';
   if (keyword !== undefined)
     keywordValue = decodeURI(keyword.catId.replace(/[+]/gi, ' '));
-  // const queryList = queryStrList.filter((item) => {
-  //   //  type
-  //   if (Object.keys(item)[0] === 't') {
-  //     if (isNaN(parseInt(item.t))) type = 0;
-  //     else type = parseInt(item.t);
-  //     return false;
-  //   }
-  //   return true;
-  // });
-  // const { dOption, pOption } = analysisQueryList(queryList);
+
   // state pagination
   const [list, setList] = useState([]);
   const [page, setPage] = useState(0);

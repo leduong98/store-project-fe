@@ -143,15 +143,6 @@ function Login() {
                     }
                   />
                 </Col>
-                <Col span={24}>
-                  <div className="d-flex justify-content-between">
-                    <Link
-                      to={constants.ROUTES.FORGOT_PASSWORD}
-                      style={{ color: '#50aaff' }}>
-                      <b>Quên mật khẩu ?</b>
-                    </Link>
-                  </div>
-                </Col>
 
                 {/* Button submit */}
                 <Col className="p-t-8 p-b-0 t-center" span={24}>

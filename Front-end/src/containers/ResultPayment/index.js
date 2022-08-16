@@ -21,7 +21,6 @@ import constants
 
 function PaymentSuccess (props){
   const user = useSelector((state) => state.user);
-  console.log(JSON.stringify(user))
   const carts = useSelector((state) => state.carts);
   const [isCheck, setCheck] = useState(false);
   const [isLoading, setLoading] = useState(true);
@@ -62,9 +61,8 @@ function PaymentSuccess (props){
         }
        axiosClient.post('/order', data).then(res => {
           setCheck(true);
-          console.log('thanh toasn thanh cong')
          onDelAllCarts()
-        }).catch(err => console.log('thanh toasn tahajt bao'))
+        }).catch()
       }
   }, [user,carts])
 
@@ -99,8 +97,6 @@ function PaymentSuccess (props){
           </Button>
         }
       />}
-
-
     </>
   )
 }

@@ -42,7 +42,7 @@ const CategoryForm = (props) => {
                         rules={{ required: true }}
                         render={({ field }) => <Input {...field}
                         />}
-                        
+
                     />
                     {errors?.name ?.type === 'required' && <p><Text type='danger'>Tên không được bỏ trống</Text></p>}
                 </Col>
@@ -70,9 +70,6 @@ const CategoryForm = (props) => {
                     {errors?.product_detail ?.type === 'required' && <p><Text type='danger'>Các thông số không được bỏ trống</Text></p>}
                 </Col>
             </Row>
-
-
-
         </Modal>)
 }
 

@@ -1,7 +1,5 @@
 import axiosClient from './axiosClient';
 
-const ADMIN_API_ENDPOINT = '/user';
-
 const MAX_JAVA_INTEGER = 2147483647
 
 const adminApi = {
