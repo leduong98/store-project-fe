@@ -14,10 +14,17 @@ function CartPayment(props) {
     (a, b) => a + ((b.price) * b.amount),
     0,
   );
+
+  const countDiscount = (a, b) => {
+      let dis = b.discounts ? b.discounts.find(ele => (new Date()).getTime() >=
+        (new Date(ele.startDate)).getTime() && (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null
+      return a + ((b.price * (dis ? dis.discount : 0)) / 100) * b.amount
+  }
+
   // tổng khuyến mãi
   const totalDiscount = carts.reduce(
-    (a, b) => a + ((b.price * (b.discounts.length > 0 ? b.discounts[0].discount : 0)) / 100) * b.amount,
-    0,
+    countDiscount,
+    0
   );
 
   // giá thật
@@ -26,7 +33,6 @@ function CartPayment(props) {
 
   const handlePayment = async () => {
     const data = await axiosClient.post("/payment/checkout?sum=" + pricePaypal);
-    console.log(data);
     window.location.href = data.data.redirect_url;
   }
 

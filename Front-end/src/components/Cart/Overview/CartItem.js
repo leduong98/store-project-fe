@@ -16,8 +16,12 @@ function CartItem(props) {
     amount,
     index,
     onDelCartItem,
-    onUpdateNumOfProd,
   } = props;
+
+  const discountTarget = discounts
+    ? discounts.find(ele => (new Date()).getTime() >= (new Date(ele.startDate)).getTime() &&
+      (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null
+
   return (
     <div className="d-flex bg-white p-12 bor-rad-4 justify-content-between">
       {/* sản phẩm */}
@@ -40,7 +44,7 @@ function CartItem(props) {
           className="d-flex flex-direction-column align-i-end"
           style={{ flexBasis: 200 }}>
           <b className="font-size-18px" style={{ color: '#3555C5' }}>
-            {helpers.formatProductPrice(price -((price * (discounts.length != 0 ? discounts[0].discount : 0)) / 100))}
+            {helpers.formatProductPrice(price - (discountTarget ? ((price * discountTarget.discount) / 100):0))}
           </b>
           <span style={{ textDecoration: 'line-through', color: '#aaa' }}>
                 {helpers.formatProductPrice(price)}
