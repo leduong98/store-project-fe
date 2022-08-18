@@ -1,5 +1,4 @@
 import commentApi from 'apis/commentApi';
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import EvaluationView
   from "../../../components/ProductDetail/Evaluation";

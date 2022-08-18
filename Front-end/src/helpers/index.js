@@ -215,22 +215,8 @@ const formatOrderDate = (date = Date.now(), flag = 0) => {
 // fn: chuyển đổi tình trạng đơn hàng
 const convertOrderStatus = (orderStatus = 0) => {
   switch (orderStatus) {
-    case 0:
-      return 'Đặt hàng thành công';
-    case 1:
-      return 'Đã tiếp nhận';
-    case 2:
-      return 'Đang lấy hàng';
-    case 3:
-      return 'Đóng gói xong';
-    case 4:
-      return 'Đang giao vận chuyển';
-    case 5:
-      return 'Đang vận chuyển';
-    case 6:
-      return 'Giao hàng thành công';
     default:
-      return 'Đặt hàng thành công';
+      return 'Thành công';
   }
 };
 

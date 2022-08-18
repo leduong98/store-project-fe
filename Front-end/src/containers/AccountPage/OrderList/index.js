@@ -1,86 +1,52 @@
-import { EyeOutlined } from '@ant-design/icons';
 import { Button, Spin, Table, Tooltip } from 'antd';
 import orderApi from 'apis/orderApi';
 import helpers from 'helpers';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import OrderDetail from './OrderDetail';
-
-// fn: tạo danh sách lọc cho trạng thái đơn hàng
-function generateOrderStaFilter() {
-  let result = [];
-  for (let i = 0; i < 7; ++i) {
-    result.push({ value: i, text: helpers.convertOrderStatus(i) });
-  }
-  return result;
-}
 
 function OrderList() {
   const [isLoading, setIsLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
-  const [orderDetails, setOrderDetails] = useState({
-    isOpen: false,
-    orderId: '',
-  });
   const user = useSelector((state) => state.user);
 
   // các cột cho bảng danh sách đơn hàng
   const orderColumns = [
     {
       title: 'Mã đơn hàng',
-      dataIndex: 'orderCode',
-      key: 'orderCode',
-      render: (orderCode, records) => (
-        <Button
-          type="link"
-          onClick={() =>
-            setOrderDetails({ isOpen: true, orderId: records._id })
-          }>
-          <b>{orderCode}</b>
-        </Button>
-      ),
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: 'Ngày mua',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
+      dataIndex: 'created_at',
+      key: 'created_at',
       render: (orderDate) => helpers.formatOrderDate(orderDate),
-      sorter: (a, b) => {
-        if (a.orderDate < b.orderDate) return -1;
-        if (a.orderDate > b.orderDate) return 1;
-        return 0;
-      },
     },
     {
       title: 'Sản phẩm',
-      dataIndex: 'orderProd',
-      key: 'orderProd',
-      render: (orderProd) => (
-        <Link to={`/product/${orderProd.id}`}>
-          <Tooltip title={orderProd.name}>
-            {helpers.reduceProductName(orderProd.name, 30)}
-          </Tooltip>
-        </Link>
-      ),
+      dataIndex: 'orders',
+      key: 'orders',
+      render: (orderProd) =>
+      {
+        const ar = []
+          orderProd.forEach((e) => {
+            ar.push(e.product.name)
+          })
+        return ar.join(", ")
+      },
     },
     {
       title: 'Tổng tiền',
-      dataIndex: 'totalMoney',
-      key: 'totalMoney',
-      render: (value, records) => {
-        const total = helpers.calTotalOrderFee(records);
-        return helpers.formatProductPrice(total);
+      dataIndex: 'amount',
+      key: 'amount',
+      render: (value) => {
+        return helpers.formatProductPrice(value);
       },
-      sorter: (a, b) =>
-        helpers.calTotalOrderFee(a) - helpers.calTotalOrderFee(b),
     },
     {
       title: 'Trạng thái đơn hàng',
       dataIndex: 'orderStatus',
       key: 'orderStatus',
-      filters: generateOrderStaFilter(),
-      onFilter: (value, record) => record.orderStatus === value,
       render: (orderStatus) => helpers.convertOrderStatus(orderStatus),
     },
   ];
@@ -109,11 +75,11 @@ function OrderList() {
     async function getOrderList() {
       try {
         setIsLoading(true);
-        const response = await orderApi.getOrderList(user._id);
+        const response = await orderApi.getOrderList();
         if (response && isSubscribe) {
-          const { list } = response.data;
+          const data = response.data;
           setOrderList(
-            list.map((item, index) => {
+            data.map((item, index) => {
               return { ...item, key: index };
             }),
           );
@@ -139,12 +105,6 @@ function OrderList() {
         </div>
       ) : (
         showOrderList(orderList)
-      )}
-      {orderDetails.isOpen && (
-        <OrderDetail
-          orderId={orderDetails.orderId}
-          onClose={() => setOrderDetails({ isOpen: false })}
-        />
       )}
     </>
   );
