@@ -18,6 +18,7 @@ import {
 import constants
   from "../../constants";
 import {useLocation} from "react-router-dom";
+import helpers from 'helpers';
 //////////
 // const user = useSelector((state) => state.user);
 // console.log(JSON.stringify(user))
@@ -85,11 +86,17 @@ function PaymentSuccess (props){
           json_type: 'transaction',
           paymentId: query[0].paymentId,
           payerId: query[2].PayerID,
-          orders: carts.map(ele => ({
-            quantity: ele.amount,
-            product_id: ele.id,
-            discount_id:  ele.discounts && ele.discounts.length > 0 ? ele.discounts[0].id : null
-          }))
+          orders: carts.map(function(ele){
+              const a = ele.discounts ? ele.discounts.find(ele => (new Date()).getTime() >=
+                (new Date(ele.startDate)).getTime() && (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null
+              const b = a ? a.discount.id : null
+              return {
+                quantity: ele.amount,
+                product_id: ele.id,
+                discount_id: b
+              }
+            }
+          )
         }
        axiosClient.post('/order', data).then(res => {
           setCheck(true);

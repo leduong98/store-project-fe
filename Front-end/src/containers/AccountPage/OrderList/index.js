@@ -77,7 +77,7 @@ function OrderList() {
         setIsLoading(true);
         const response = await orderApi.getOrderList();
         if (response && isSubscribe) {
-          const data = response.data;
+          const data = response.data.data;
           setOrderList(
             data.map((item, index) => {
               return { ...item, key: index };
