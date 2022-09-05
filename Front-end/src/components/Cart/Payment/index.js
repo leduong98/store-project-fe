@@ -31,8 +31,9 @@ function CartPayment(props) {
   const price = tempPrice - totalDiscount + transportFee
   const pricePaypal = (price/23000).toFixed(2)
 
-  const handlePayment = () => {
-    window.location.href = "http://localhost:3000/payment/success"
+  const handlePayment = async () => {
+    const data = await axiosClient.post("/payment/checkout?sum=" + pricePaypal);
+    window.location.href = data.data.redirect_url;
   }
 
   // rendering ...
