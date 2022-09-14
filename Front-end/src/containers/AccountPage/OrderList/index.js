@@ -20,7 +20,7 @@ function OrderList() {
       title: 'Ngày mua',
       dataIndex: 'created_at',
       key: 'created_at',
-      render: (orderDate) => helpers.formatOrderDate(orderDate),
+      render: (orderDate) => orderDate,
     },
     {
       title: 'Sản phẩm',
