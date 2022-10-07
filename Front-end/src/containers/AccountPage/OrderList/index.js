@@ -45,8 +45,8 @@ function OrderList() {
     },
     {
       title: 'Trạng thái đơn hàng',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
+      dataIndex: 'status',
+      key: 'status',
       render: (orderStatus) => helpers.convertOrderStatus(orderStatus),
     },
   ];

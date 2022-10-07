@@ -213,9 +213,11 @@ const formatOrderDate = (date = Date.now(), flag = 0) => {
 };
 
 // fn: chuyển đổi tình trạng đơn hàng
-const convertOrderStatus = (orderStatus = 0) => {
+const convertOrderStatus = (orderStatus ) => {
   switch (orderStatus) {
-    default:
+    case "WAIT_FOR_APPROVE":
+      return 'Đang giao hàng';
+    case "SUCCESSFUL":
       return 'Thành công';
   }
 };
