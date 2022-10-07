@@ -66,23 +66,15 @@ function TransactionList() {
           value: 'APPROVED',
         },
         {
-          text: TransactionStatus['TRANSPORT'],
-          value: 'TRANSPORT',
-        },
-        {
           text: TransactionStatus['SUCCESSFUL'],
           value: 'SUCCESSFUL',
-        },
-        {
-          text: TransactionStatus['RECEIVED'],
-          value: 'RECEIVED',
         },
         {
           text: TransactionStatus['CANCEL'],
           value: 'CANCEL',
         }
       ],
-      defaultFilteredValue : ['WAIT_FOR_APPROVE', 'APPROVED'],
+      defaultFilteredValue : ['WAIT_FOR_APPROVE', 'APPROVED',"SUCCESSFUL","CANCEL"],
       onFilter: (value, record) => {
         return record.status && record.status.indexOf(value) === 0
       },
