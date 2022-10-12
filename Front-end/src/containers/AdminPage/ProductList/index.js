@@ -158,7 +158,8 @@ function ProductList() {
     setProductId(id)
   }
 
-  const handleChangeTable = event => {
+  const handleChangeTable = (event,a,b,{ currentDataSource }) => {
+    setTotal(currentDataSource.length);
     setPage(event.current)
   }
 
@@ -184,7 +185,7 @@ function ProductList() {
           <br></br>
           <Table
             columns={columns}
-            dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.name && ele.name.includes(searchValue))) }
+            dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.name && ele.name.includes(searchValue)))}
             onChange={handleChangeTable}
             pagination={{ showLessItems: true, position: ['bottomCenter'], pageSize: 5, current: page }}
           />

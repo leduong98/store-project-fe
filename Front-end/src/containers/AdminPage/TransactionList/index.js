@@ -121,7 +121,8 @@ function TransactionList() {
     setVisible(true);
   }
 
-  const handleChangeTable = event => {
+  const handleChangeTable = (event,a,b,{ currentDataSource }) => {
+    setTotalText(currentDataSource.length)
     setPage(event.current)
   }
 
