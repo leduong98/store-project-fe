@@ -14,6 +14,7 @@ function TransactionList() {
   const [item, setItem] =useState(null);
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
+  const [totalText, setTotalText] = useState(0)
 
   const columns = [
     {
@@ -93,24 +94,14 @@ function TransactionList() {
     },
   ];
 
-  const onDelCategory = async (id) => {
-    try {
-      const response = await adminApi.deleteCategory(id);
-      if (response && response.status === 200) {
-        message.success('Xoá categoty thành công');
-        getCategoryList()
-      }
-    } catch (error) {
-      message.error('Xoá categoty thất bại');
-    }
-  };
 
   async function getCategoryList() {
     try {
       setIsLoading(true);
       const response = await adminApi.getAllTransaction();
       if (response) {
-        const { data } = response.data;
+        const { data, metadata } = response.data;
+        setTotalText(metadata.total);
         setDataColumn([...data]);
         setIsLoading(false);
       }
@@ -152,6 +143,7 @@ function TransactionList() {
             onChange={handleChangeTable}
             pagination={{ showLessItems: true, position: ['bottomCenter'], pageSize: 10, current: page }}
           />
+          <span>Total: {totalText}</span>
         </div>
       )}
     </>
