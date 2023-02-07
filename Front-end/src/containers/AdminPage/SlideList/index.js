@@ -53,7 +53,7 @@ function SlideList() {
       title: 'Action',
       align: 'center',
       render: (_v, records) => (
-        <Row style={{display: 'flex', justifyContent: 'center'}}> 
+        <Row style={{display: 'flex', justifyContent: 'center'}}>
           <Button type='primary' icon={<EditOutlined />} onClick={() => onClickOpenModal("update", records)}> Sửa</Button>
           &nbsp;
           &nbsp;

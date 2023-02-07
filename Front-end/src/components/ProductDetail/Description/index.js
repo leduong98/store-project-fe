@@ -30,7 +30,7 @@ function Description(props) {
       {/* Bài viết chi tiết */}
       <Col
         span={24}
-        md={16}
+        md={17}
         className={`p-8 ${!isHideDesc ? 'hide-desc' : ''}`}>
         <h2 className="font-weight-700">Mô tả sản phẩm</h2>
         <div className="underline-title"></div>
@@ -38,7 +38,7 @@ function Description(props) {
       </Col>
 
       {/*/!* Thông số kỹ thuật *!/*/}
-      <Col span={24} md={8} className={`p-8 ${!isHideDesc ? 'hide-desc' : ''}`}>
+      <Col span={24} md={7} className={`p-8 ${!isHideDesc ? 'hide-desc' : ''}`}>
         <h2 className="font-weight-700">Thông số kỹ thuật</h2>
         <br/>
         <div className="underline-title"></div>

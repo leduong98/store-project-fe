@@ -68,7 +68,7 @@ const SlideForm = (props) => {
                         rules={{ required: true }}
                         render={({ field }) => <Input {...field}
                         />}
-                        
+
                     />
                     {errors?.name ?.type === 'required' && <p><Text type='danger'>Tên không được bỏ trống</Text></p>}
                 </Col>

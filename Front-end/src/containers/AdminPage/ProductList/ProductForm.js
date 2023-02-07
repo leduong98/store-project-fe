@@ -46,10 +46,10 @@ const ProductForm = (props) => {
         data = { ...data, 'json_type': 'product' }
         data.detail = JSON.stringify(productDetail.filter(item => productDetailModel.includes(item.name)));
         data.imageList = imageList.map(item => item.url).join(',');
-        { debugger }
         if (props.action === 'insert') {
             await adminApi.insertProduct(data)
         } else {
+          console.log("vao day")
             await adminApi.updateProduct(data)
         }
         props.cancel()
@@ -233,7 +233,7 @@ const ProductForm = (props) => {
                         rules={{ required: true, min: 1, max: 1000 }}
                         render={({ field }) => <EditorComponent data={field.value} changeEditor={changeEditor} height={"480px"} />}
                     />
-                    {errors?.description?.type === 'required' && <p><Text type='danger'>Số lượng không được bỏ trống</Text></p>}
+                    {errors?.description?.type === 'required' && <p><Text type='danger'>Mô tả không được bỏ trống</Text></p>}
                 </Col>
                 {memoizedImageList}
 

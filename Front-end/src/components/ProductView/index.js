@@ -33,7 +33,7 @@ function ProductView(props) {
       style={{ height, maxWidth }}
       loading={false}
       cover={
-        <img className="max-w-100 max-h-100" src={avtUrl} alt="Product Photo" />
+        <img className="Product-View-img max-h-100" src={avtUrl} alt="Product Photo" />
       }
       hoverable>
       {/* Tên sản phẩm */}

@@ -12,15 +12,15 @@ function FooterView() {
       <div className="container p-tb-32">
         <p className="t-center" style={{ color: '#888' }}>
           <span className="font-size-18px">
-            CỬA HÀNG CUNG CẤP CAMERA GIÁM SÁT - WICAMERAS
+            CỬA HÀNG CUNG CẤP VÀ BUÔN BÁN THIẾT BỊ DI ĐỘNG - DLSTORE
           </span>
           <br />
           <strong>Địa chỉ:</strong>&nbsp;Số 20 Phố Viên, Đức Thắng, Bắc Từ Liêm,
           Thành phố Hà Nội
           <br/>
           <strong>Điện&nbsp;thoại:</strong>&nbsp;0335.12.1234 |{' '}
-          <strong>Email:</strong>&nbsp;wicam@gmail.com&nbsp;|{' '}
-          <strong>Website:</strong>&nbsp;<a href="/">Wistore.vn</a>
+          <strong>Email:</strong>&nbsp;dlstore@gmail.com&nbsp;|{' '}
+          <strong>Website:</strong>&nbsp;<a href="/">DLStore.vn</a>
         </p>
         <div className="d-flex align-i-center justify-content-center">
           <div className="d-flex align-i-center m-lr-32">

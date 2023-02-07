@@ -1,4 +1,7 @@
 .Product-View {
+  &-img {
+    max-width: 75%;
+  }
   &-price {
     &--main {
       color: #155bde;
