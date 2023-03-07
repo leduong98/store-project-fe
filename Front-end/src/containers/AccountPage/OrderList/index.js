@@ -61,7 +61,7 @@ function OrderList() {
         columns={orderColumns}
         dataSource={list}
         pagination={{
-          pageSize: 8,
+          pageSize: 4,
           showSizeChanger: false,
           position: ['bottomRight'],
         }}
@@ -71,30 +71,31 @@ function OrderList() {
 
   // event: Lấy danh sách
   useEffect(() => {
-    let isSubscribe = true;
     async function getOrderList() {
       try {
         setIsLoading(true);
         const response = await orderApi.getOrderList();
-        if (response && isSubscribe) {
-          const data = response.data.data;
+        if (response) {
+          const data = response.data;
+          console.log(data,"vao day")
           setOrderList(
             data.map((item, index) => {
+              console.log(item, "item")
               return { ...item, key: index };
             }),
           );
           setIsLoading(false);
         }
       } catch (error) {
-        if (isSubscribe) {
           setIsLoading(false);
           setOrderList([]);
-        }
       }
     }
     if (user) getOrderList();
     return () => {};
   }, [user]);
+
+  console.log(orderList, "orederLisst")
 
   // rendering ...
   return (
