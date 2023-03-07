@@ -1,4 +1,4 @@
-import { Button, Col, Input, InputNumber, Modal, Row, Select, Typography, Upload } from "antd";
+import { Col, Input, InputNumber, Modal, Row, Select, Typography, Upload } from "antd";
 import { useForm, Controller } from "react-hook-form";
 import React, { useEffect, useMemo, useState } from 'react';
 import adminApi from "../../../apis/adminApi";
@@ -49,7 +49,6 @@ const ProductForm = (props) => {
         if (props.action === 'insert') {
             await adminApi.insertProduct(data)
         } else {
-          console.log("vao day")
             await adminApi.updateProduct(data)
         }
         props.cancel()
@@ -105,21 +104,19 @@ const ProductForm = (props) => {
         setProductDetail(newArray)
     }
 
-    const memoizedImageList = useMemo(() => (<Col span={24}>
+    const memoizedImageList = useMemo(() =>
+      (<Col span={24}>
         <Title level={5}>Danh sách ảnh: </Title>
         <Upload
             listType="picture-card"
             fileList={imageList.map(item => ({ ...item, url: baseURL + item.url }))}
             beforeUpload={() => false}
-            // onPreview={handlePreview}
             onChange={e => changeFile(e, "image_list")}
         >
             {[].length >= 8 ? null : uploadButton}
         </Upload>
-        {/* <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={handleCancel}>
-            <img alt="example" style={{ width: '100%' }} src={previewImage} />
-        </Modal> */}
-    </Col>), [imageList]);
+      </Col>),
+      [imageList]);
 
     const changeEditor = ele => {
         setValue('description', ele);
@@ -236,7 +233,6 @@ const ProductForm = (props) => {
                     {errors?.description?.type === 'required' && <p><Text type='danger'>Mô tả không được bỏ trống</Text></p>}
                 </Col>
                 {memoizedImageList}
-
             </Row>
 
 

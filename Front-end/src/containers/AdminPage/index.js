@@ -6,6 +6,7 @@ import {
   ShoppingCartOutlined,
   TransactionOutlined,
   SlidersOutlined,
+  ImportOutlined,
 } from '@ant-design/icons';
 import {
   Button,
@@ -24,6 +25,7 @@ const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
 const SlideList = React.lazy(() => import('./SlideList'));
 const UserList = React.lazy(() => import('./User'));
+const ImportProductList = React.lazy(() => import('./ImportProduct'));
 import {
   Link,
   Route,
@@ -75,6 +77,12 @@ const menuList = [
     key: 'slide',
     title: 'Slide',
     icon: <SlidersOutlined/>,
+    children: [],
+  },
+  {
+    key: 'import',
+    title: 'Import',
+    icon: <ImportOutlined />,
     children: [],
   },
 ];
@@ -213,6 +221,7 @@ function AdminPage(props) {
                 <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
 				        <Route key={"user"} path={`${match.path}/user`} exact={true} component={UserList} />
                 <Route key={"slide"} path={`${match.path}/slide`} exact={true} component={SlideList} />
+                <Route key={"slide"} path={`${match.path}/import`} exact={true} component={ImportProductList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
                   <Dashboard />
