@@ -5,10 +5,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axiosClient
   from "../../../apis/axiosClient";
+import {
+  useDispatch,
+  useSelector
+} from "react-redux";
+import cartReducer
+  from "../../../reducers/carts";
 
 
 function CartPayment(props) {
   const { carts, transportFee } = props;
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   // giá tạm tính
   const tempPrice = carts.reduce(
     (a, b) => a + ((b.price) * b.amount),
@@ -34,6 +42,36 @@ function CartPayment(props) {
   const handlePayment = async () => {
     const data = await axiosClient.post("/payment/checkout?sum=" + pricePaypal);
     window.location.href = data.data.redirect_url;
+  }
+
+  const handlePaymentOff = async () => {
+    console.log("dfdfdfdf");
+    if (user.id && !(carts.length == 0)) {
+      const data = {
+        email: user?.email,
+        phone: user?.phone,
+        address: user?.address,
+        payment: 'OFFLINE',
+        payment_info: 'Thanh toán đơn hàng',
+        json_type: 'transaction',
+        orders: carts.map(function(ele){
+            const a = ele.discounts ? ele.discounts.find(ele => (new Date()).getTime() >=
+              (new Date(ele.startDate)).getTime() && (new Date()).getTime() <= (new Date(ele.endDate)).getTime()) : null
+            const b = a ? a.discount.id : null
+            return {
+              quantity: ele.amount,
+              product_id: ele.id,
+              discount_id: b
+            }
+          }
+        )
+      }
+      axiosClient.post('/order', data).then(res => {
+        dispatch(cartReducer.resetCart());
+        alert("Thanh toán thành công!");
+        history.push("/");
+      }).catch()
+    }
   }
 
   // rendering ...
@@ -72,13 +110,21 @@ function CartPayment(props) {
       </div>
 
         {/*<Link to={constants.ROUTES.PAYMENT}>*/}
+      <Button
+        onClick={() => handlePaymentOff()}
+        className="m-t-16 d-block m-lr-auto w-100"
+        type="primary"
+        size="large"
+        style={{ backgroundColor: '#3555c5', color: '#fff' }}>
+        THANH TOÁN TRỰC TIẾP
+      </Button>
           <Button
             onClick={() => handlePayment()}
             className="m-t-16 d-block m-lr-auto w-100"
             type="primary"
             size="large"
             style={{ backgroundColor: '#3555c5', color: '#fff' }}>
-            THANH TOÁN
+            THANH TOÁN ONLINE
           </Button>
         {/*</Link>*/}
     </div>

@@ -98,6 +98,12 @@ const adminApi = {
     });
   },
 
+  updateStatusTransaction: (id, data) => {
+    const url = `/order/${id}/status`;
+    return axiosClient.post(url, data);
+  },
+
+
 
   getTransactionById: (id) => {
     const url = `/order/${id}`;

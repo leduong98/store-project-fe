@@ -14,6 +14,7 @@ function TransactionList() {
   const [item, setItem] =useState(null);
   const [page, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState('');
+  const [totalText, setTotalText] = useState(0)
 
   const columns = [
     {
@@ -58,10 +59,26 @@ function TransactionList() {
       dataIndex: 'status',
       filters: [
         {
+          text: TransactionStatus['WAIT_FOR_APPROVE'],
+          value: 'WAIT_FOR_APPROVE',
+        },
+        {
+          text: TransactionStatus['APPROVED'],
+          value: 'APPROVED',
+        },
+        {
           text: TransactionStatus['SUCCESSFUL'],
           value: 'SUCCESSFUL',
+        },
+        {
+          text: TransactionStatus['CANCEL'],
+          value: 'CANCEL',
         }
       ],
+      defaultFilteredValue : ['WAIT_FOR_APPROVE', 'APPROVED',"SUCCESSFUL","CANCEL"],
+      onFilter: (value, record) => {
+        return record.status && record.status.indexOf(value) === 0
+      },
       render: (v, record) => TransactionStatus[record.status],
       width: '10%'
     },
@@ -72,16 +89,19 @@ function TransactionList() {
         <Row style={{display: 'flex', justifyContent: 'center'}}>
           <Button type='primary' icon={<EyeOutlined />} onClick={() => onClickOpenModal("view", records)}> Xem chi tiết</Button>
         </Row>
+
       ),
     },
   ];
+
 
   async function getCategoryList() {
     try {
       setIsLoading(true);
       const response = await adminApi.getAllTransaction();
       if (response) {
-        const { data } = response.data;
+        const { data, metadata } = response.data;
+        setTotalText(metadata.total);
         setDataColumn([...data]);
         setIsLoading(false);
       }
@@ -95,12 +115,14 @@ function TransactionList() {
   }, []);
 
   const onClickOpenModal = (action, item = null) => {
+    console.log(item)
     setAction(action);
     setItem(item?.id);
     setVisible(true);
   }
 
-  const handleChangeTable = event => {
+  const handleChangeTable = (event,a,b,{ currentDataSource }) => {
+    setTotalText(currentDataSource.length)
     setPage(event.current)
   }
 
@@ -122,6 +144,7 @@ function TransactionList() {
             onChange={handleChangeTable}
             pagination={{ showLessItems: true, position: ['bottomCenter'], pageSize: 10, current: page }}
           />
+          <span>Total: {totalText}</span>
         </div>
       )}
     </>

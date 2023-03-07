@@ -1,5 +1,15 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Image, message, Modal, Popconfirm, Row, Spin, Table } from 'antd';
+import {
+  Button,
+  Image,
+  Input,
+  message,
+  Modal,
+  Popconfirm,
+  Row,
+  Spin,
+  Table
+} from 'antd';
 import adminApi from 'apis/adminApi';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +30,8 @@ function ProductList() {
   const categoryList = useSelector((state) => state.common?.categoryList);
   const [visibleDiscount, setVisibleDicount] = useState(false);
   const [productId, setProductId] = useState(0)
+  const [searchValue, setSearchValue] = useState('');
+  const [total, setTotal] = useState(0)
 
   const columns = [
     {
@@ -96,7 +108,7 @@ function ProductList() {
             <Button danger icon={<DeleteOutlined />}>Xoá</Button>
           </Popconfirm>
         </Row>
-  
+
       ),
     },
   ];
@@ -118,7 +130,8 @@ function ProductList() {
       setIsLoading(true);
       const response = await adminApi.getAllProduct();
       if (response) {
-        const { data } = response.data;
+        const { data , metadata} = response.data;
+        setTotal(metadata.total)
         setDataColumn([...data]);
         setIsLoading(false);
       }
@@ -145,7 +158,8 @@ function ProductList() {
     setProductId(id)
   }
 
-  const handleChangeTable = event => {
+  const handleChangeTable = (event,a,b,{ currentDataSource }) => {
+    setTotal(currentDataSource.length);
     setPage(event.current)
   }
 
@@ -166,12 +180,16 @@ function ProductList() {
             width={1200}>
            <DiscountList productId={productId} />
           </Modal>
+          <Input style={{width: '300px'}} value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Nhập tên sản phẩm..."/>
+          <br></br>
+          <br></br>
           <Table
             columns={columns}
-            dataSource={dataColumn}
+            dataSource={dataColumn.filter(ele => searchValue.trim() === '' || (ele.name && ele.name.includes(searchValue)))}
             onChange={handleChangeTable}
             pagination={{ showLessItems: true, position: ['bottomCenter'], pageSize: 5, current: page }}
           />
+          <span>Total: {total}</span>
         </div>
       )}
     </>
