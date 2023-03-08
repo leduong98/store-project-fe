@@ -24,6 +24,11 @@ const productApi = {
     return axiosClient.get(url, { params: { page, size } });
   },
 
+  getAllProductsName: () => {
+    const url = PRODUCT_API_URL + '/list';
+    return axiosClient.get(url);
+  },
+
   // api: tìm kiếm sản phẩm
   getSearchProducts: (product , page = 0, size = 8, category) => {
     const url = PRODUCT_API_URL + '/filter';

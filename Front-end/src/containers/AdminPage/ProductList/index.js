@@ -145,8 +145,6 @@ function ProductList() {
     dispatch(commonReducers.getListCategory());
   }, []);
 
-  console.log(dataColumn)
-
   const onClickOpenModal = (action, item = null) => {
     setAction(action);
     setItem(item);

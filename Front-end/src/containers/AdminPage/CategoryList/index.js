@@ -52,7 +52,7 @@ function CategoryList() {
             <Button danger icon={<DeleteOutlined />}>Xoá</Button>
           </Popconfirm>
         </Row>
-  
+
       ),
     },
   ];
@@ -88,7 +88,6 @@ function CategoryList() {
   }, []);
 
   const onClickOpenModal = (action, item = null) => {
-    console.log(item)
     setAction(action);
     setItem(item);
     setVisible(true);

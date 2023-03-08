@@ -25,7 +25,7 @@ const ProductList = React.lazy(() => import('./ProductList'));
 const CategoryList = React.lazy(() => import('./CategoryList'));
 const SlideList = React.lazy(() => import('./SlideList'));
 const UserList = React.lazy(() => import('./User'));
-const ImportProductList = React.lazy(() => import('./ImportProduct'));
+const ImportProductList = React.lazy(() => import('./ImportProductList'));
 import {
   Link,
   Route,
@@ -221,7 +221,7 @@ function AdminPage(props) {
                 <Route key={"transaction"} path={`${match.path}/transaction`} exact={true} component={TransactionList} />
 				        <Route key={"user"} path={`${match.path}/user`} exact={true} component={UserList} />
                 <Route key={"slide"} path={`${match.path}/slide`} exact={true} component={SlideList} />
-                <Route key={"slide"} path={`${match.path}/import`} exact={true} component={ImportProductList} />
+                <Route key={"import"} path={`${match.path}/import`} exact={true} component={ImportProductList} />
                 <Route key={"dashboard"} path={""} exact={true} component={Dashboard} />
                 <Route>
                   <Dashboard />

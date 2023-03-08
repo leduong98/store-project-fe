@@ -49,7 +49,7 @@ const ProductForm = (props) => {
         if (props.action === 'insert') {
             await adminApi.insertProduct(data)
         } else {
-            await adminApi.updateProduct(data)
+            await adminApi.updateProduct(data, props.value.id)
         }
         props.cancel()
         props.getList()
@@ -234,8 +234,6 @@ const ProductForm = (props) => {
                 </Col>
                 {memoizedImageList}
             </Row>
-
-
 
         </Modal >)
 }

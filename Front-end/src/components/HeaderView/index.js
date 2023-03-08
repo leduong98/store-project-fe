@@ -85,9 +85,6 @@ function HeaderView() {
       else setIsSmDevice(false);
     });
 
-    return () => {
-      window.removeEventListener('resize');
-    };
   }, []);
 
   // event: close drawer to redirect

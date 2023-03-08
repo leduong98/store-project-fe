@@ -39,8 +39,8 @@ const adminApi = {
     return axiosClient.post(url, data);
   },
 
-  updateProduct: (data) => {
-    const url = '/product';
+  updateProduct: (data, id) => {
+    const url = '/product/' + id;
     return axiosClient.patch(url, data);
   },
 
