@@ -1,8 +1,19 @@
-import { Button, Spin, Table, Tooltip } from 'antd';
+import {
+  Button,
+  Popconfirm,
+  Row,
+  Spin,
+  Table,
+  Tooltip
+} from 'antd';
 import orderApi from 'apis/orderApi';
 import helpers from 'helpers';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import {
+  DeleteOutlined,
+  EditOutlined
+} from "@ant-design/icons";
 
 function OrderList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +59,22 @@ function OrderList() {
       dataIndex: 'status',
       key: 'status',
       render: (orderStatus) => helpers.convertOrderStatus(orderStatus),
+    },
+    {
+      title: 'Hành động',
+      render: (_v, records) => (
+        <Row style={{display: 'flex', justifyContent: 'center'}}>
+          <Popconfirm
+            title="Bạn có chắc muốn huỷ đơn hàng ?"
+            placement="left"
+            cancelText="Huỷ bỏ"
+            okText="Xác nhận"
+            onConfirm={() => onDelCategory(records.id)}>
+            <Button danger icon={<DeleteOutlined />}>Xoá</Button>
+          </Popconfirm>
+        </Row>
+
+      ),
     },
   ];
   // fn: hiển thị danh sách đơn hàng

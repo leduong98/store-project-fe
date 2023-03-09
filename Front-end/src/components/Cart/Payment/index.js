@@ -67,7 +67,7 @@ function CartPayment(props) {
       }
       axiosClient.post('/order', data).then(res => {
         dispatch(cartReducer.resetCart());
-        alert("Thanh toán thành công!");
+        alert("Chờ thanh toán!");
         history.push("/");
       }).catch()
     }
@@ -109,14 +109,14 @@ function CartPayment(props) {
       </div>
 
         {/*<Link to={constants.ROUTES.PAYMENT}>*/}
-      {/*<Button*/}
-      {/*  onClick={() => handlePaymentOff()}*/}
-      {/*  className="m-t-16 d-block m-lr-auto w-100"*/}
-      {/*  type="primary"*/}
-      {/*  size="large"*/}
-      {/*  style={{ backgroundColor: '#3555c5', color: '#fff' }}>*/}
-      {/*  THANH TOÁN TRỰC TIẾP*/}
-      {/*</Button>*/}
+      <Button
+        onClick={() => handlePaymentOff()}
+        className="m-t-16 d-block m-lr-auto w-100"
+        type="primary"
+        size="large"
+        style={{ backgroundColor: '#3555c5', color: '#fff' }}>
+        THANH TOÁN TRỰC TIẾP
+      </Button>
           <Button
             onClick={() => handlePayment()}
             className="m-t-16 d-block m-lr-auto w-100"

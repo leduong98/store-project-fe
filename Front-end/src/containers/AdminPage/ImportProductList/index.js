@@ -56,7 +56,6 @@ function ImportProductList() {
             price: e.productSource.price
           }
         })
-        console.log(data,"daaaa")
         setDataColumn([...dataTo]);
         setIsLoading(false);
       }

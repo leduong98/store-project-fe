@@ -212,18 +212,18 @@ const formatOrderDate = (date = Date.now(), flag = 0) => {
     : `${newDate.getHours()}:${newDate.getMinutes()} ${d}/${m}/${y}`;
 };
 
-// fn: chuyển đổi tình trạng đơn hàng
 const convertOrderStatus = (orderStatus ) => {
   switch (orderStatus) {
-    case "WAIT_FOR_APPROVE":
-      return 'Đang giao hàng';
+    case "WAIT_FOR_PAY":
+      return 'Chờ thanh toán';
+    case "CANCEL":
+      return 'Đã huỷ';
     case "SUCCESSFUL":
       return 'Thành công';
   }
 };
 
 
-// fn: tính tổng phí đơn hàng
 const calTotalOrderFee = (order) => {
   const { transportFee, orderProd, numOfProd } = order;
   const total =
